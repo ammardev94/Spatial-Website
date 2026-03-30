@@ -1,0 +1,177 @@
+// Font : Avenir
+
+@font-face {
+  font-family: "Avenir LT Std";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("fonts/avenir/Avenir-Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Avenir LT Std";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/avenir/Avenir-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Avenir LT Std";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("fonts/avenir/Avenir-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Avenir LT Std";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("fonts/avenir/Avenir-Semibold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Avenir LT Std";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("fonts/avenir/Avenir-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Avenir LT Std";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("fonts/avenir/Avenir-Black.ttf") format("truetype");
+}
+
+// Font : Roboto
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("fonts/roboto/Roboto-Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/roboto/Roboto-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("fonts/roboto/Roboto-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("fonts/roboto/Roboto-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("fonts/roboto/Roboto-Black.ttf") format("truetype");
+}
+
+$base-font-family: "Roboto";
+$heading-font-family: "Avenir LT Std";
+$sub-heading-font-family: "Avenir LT Std";
+$paragraph-font-family: "Roboto";
+
+$font-special: "Avenir LT Std";
+$font-another-special: "Avenir LT Std";
+$icon-font-family: "FontAwesome";
+
+$base-line-height: 2em;
+//** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
+
+$base-font-size: 1em !default; // 16px
+
+$font-size-h1: 6em; // 96px
+$font-size-h2: 3.875em; // 62px
+$font-size-h3: 2em; // 32px
+$font-size-h4: 1.25em; // 20px
+$font-size-h5: 1.125em; // 18px
+$font-size-h6: 1em; // 16px
+
+$font-size-xsmall: 0.714289em; // 10px
+$font-size-small: 0.85714em; // 12px
+$font-size-medium: 1.14286em; // 16px
+$font-size-large: 1.285717em; // 18px
+$font-size-xlarge: 1.714285em; // 24px
+
+$font-weight-black: 900;
+$font-weight-bold: 700;
+$font-weight-semi-bold: 600;
+$font-weight-normal: 400;
+$font-weight-light: 300;
+$font-weight-thin: 100;
+
+$font-size-h1-res: 2.85714em; // 45.7px
+$font-size-h2-res: 2.42857em; // 38.9px
+$font-size-h3-res: 1.714285em; // 27.4px
+$font-size-h4-res: 1.42857em; // 22.9px
+$font-size-h5-res: 1.14286em; // 18.3px
+$font-size-h6-res: 1em; // 16px
+
+//== Color Variation
+//
+//## Text color, Background color, Border color.
+
+$theme-default: #777777;
+$theme-white: #ffffff;
+$theme-black: #212121;
+$theme-silver: #f1f1f1;
+$theme-grey: #666666;
+$theme-lg-grey: #f7f7f7;
+$theme-sp-grey: #363636;
+$theme-dk-grey: #373c3f;
+$theme-sp-blue: #f3f9f9;
+$theme-lg-black: #3b3a3a;
+$theme-lg-white: #e2eaf3;
+$theme-dk-pink: #c6c6c6;
+$theme-lg-black: #434343;
+$theme-lg-pink: #bcbcbc;
+$theme-purple: #4b0082;
+$theme-dk-green: #4c4c4c;
+$theme-lg-white: #f0f2f5;
+$theme-lg-silver: #b3b3b3;
+$theme-lg-blue: #3d5975;
+$theme-dk-blue: #10121e;
+
+// Theme Colors
+
+$theme-primary: #18191a;
+$theme-middle: #232628;
+$theme-secondary: #f1f1f1;
+$theme-blue: #5aafe4;
+$theme-pink: #c6c6c6;
+
+$link-color: #ffffff;
+
+//== Sprite Path
+//
+
+$sprite-image: "sprite.png";
+$media-basepath: "images";
+$full-path: "#{$media-basepath}/#{$sprite-image}";
+
+// Icon Fonts Path
+// $icomoon-font-path: "assets-web/icon-fonts/fonts" !default;

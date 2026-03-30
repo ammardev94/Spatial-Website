@@ -1,0 +1,124 @@
+// FOOTER
+.footer {
+  background-color: #f2f2f2;
+
+  a {
+    padding: 0;
+    color: var(--theme-white);
+    text-transform: capitalize;
+    text-decoration: unset;
+    font-size: 14px;
+    font-weight: 300;
+    transition: 0.4s all;
+
+    &:hover {
+      color: #18191a;
+    }
+  }
+
+  h5 {
+    font-size: 16px;
+  }
+
+  p {
+    font-size: 14px;
+  }
+
+  .middle-row {
+    border-color: #c1c1c1 !important;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .foo-links {
+      max-width: calc(100% / 4 - 20px);
+
+      h5 {
+        font-family: "Roboto";
+        // text-decoration: underline;
+      }
+
+      &.foo-contact-details {
+        li {
+          display: flex;
+          justify-content: flex-start;
+
+          img {
+            margin: unset;
+          }
+        }
+      }
+    }
+  }
+
+  .bottom-row {
+    p {
+      color: rgba(30, 30, 30, 0.5);
+      margin-bottom: 0;
+    }
+
+    a {
+      font-weight: normal;
+      text-transform: uppercase;
+    }
+  }
+
+  .social-links {
+    ul {
+      gap: 10px;
+
+      li {
+        a {
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #1E1E1E;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+}
+
+.newsletter-container {
+  form {
+    position: relative;
+    display: flex;
+    border: 1px solid #1e1e1e;
+    padding: 8px 5px;
+
+    input {
+      margin: 0;
+      background: transparent;
+      border: 0;
+      padding-right: 1rem;
+      color: #1e1e1e;
+
+      &::placeholder {
+        color: rgba(30, 30, 30, .5);
+      }
+
+      &:focus {
+        background: transparent;
+        border: 0;
+        box-shadow: unset;
+      }
+    }
+
+    button {
+      font-weight: 300;
+      padding: 10px 14px;
+      width: 70%;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      border-radius: 0;
+    }
+  }
+
+
+}
+
+// FOOTER

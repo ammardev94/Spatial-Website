@@ -1,0 +1,117 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background: #fff;
+  box-shadow: 0 0 20px 0px rgb(0 0 0 / 20%);
+
+  a {
+    font-weight: 400 !important;
+    text-transform: uppercase;
+
+    &.active {
+      text-decoration: underline;
+    }
+  }
+
+  &.var1 {
+    background: transparent;
+    padding: 20px 0;
+    box-shadow: unset;
+
+    img.img-fluid {
+      filter: invert(1);
+    }
+
+    a {
+      color: #fff;
+
+      &.active {
+        color: #fff !important;
+      }
+    }
+  }
+
+  &.header-sticky {
+    box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.2);
+
+    img.img-fluid {
+      filter: unset;
+    }
+
+    a {
+      color: black;
+
+      &.active {
+        color: black !important;
+      }
+    }
+
+    .butn {
+      &.butn-secondary {
+        color: black;
+
+        &:hover {
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+/* Hide submenu by default */
+
+.submenu {
+  display: none;
+  transition: all 0.3s ease;
+
+  ul {
+    li {
+      a {
+        font-size: 18px !important;
+      }
+    }
+  }
+}
+
+.submenu.open {
+  display: block;
+}
+
+.toggle-submenu i {
+  transition: transform 0.3s ease;
+}
+
+.toggle-submenu.active i {
+  transform: rotate(180deg);
+}
+
+/* Optional: better spacing on mobile */
+@media (max-width: 991px) {
+
+  button.toggle-submenu i:before {
+    color: #fff;
+    font-size: 25px;
+  }
+
+  .dropdown-mobile>a {
+    width: 100%;
+  }
+
+  .submenu a {
+    color: #333;
+    text-decoration: none;
+    display: block;
+    padding: 5px 0;
+  }
+
+  .submenu a:hover {
+    color: #000;
+  }
+}
