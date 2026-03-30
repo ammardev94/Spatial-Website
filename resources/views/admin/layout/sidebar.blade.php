@@ -3,11 +3,20 @@
         <div id="sidebar-menu" class="sidebar-menu">
             <ul>
                 <li>
-                    <a href="{{ route('admin.dashboard') }}" class="d-flex align-items-center border bg-white rounded p-2 mb-3">
+                    <a href="{{ route('admin.dashboard') }}"
+                        class="d-flex align-items-center border bg-white rounded p-2 mb-3">
                         <span class="avatar avatar-xl me-2 avatar-rounded">
-                            <img src="{{ storage_asset((optional(auth()->guard('admin')->user())->img ?? 'users/default.jpg')) }}" alt="img">
+                            @php
+                            $adminUser = auth()->guard('admin')->user();
+                            @endphp
+                            @if($adminUser && $adminUser->image)
+                            <img src="{{ asset('storage/'.$adminUser->image->url) }}" alt="img">
+                            @else
+                            <img src="{{ asset('assets/img/profiles/avatar-02.jpg') }}" alt="img">
+                            @endif
                         </span>
-                        <span class="text-dark ms-2 fw-normal">Welcome <br> {{ auth()->guard('admin')->user()->name }}</span>
+                        <span class="text-dark ms-2 fw-normal">Welcome <br> {{ auth()->guard('admin')->user()->name
+                            }}</span>
                     </a>
                 </li>
             </ul>

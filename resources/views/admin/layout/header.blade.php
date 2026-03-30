@@ -32,50 +32,54 @@
             <!-- /Search -->
             <div class="d-flex align-items-center">
                 <div class="pe-1" id="notification_item">
-                    <a href="javascript:void(0);" class="btn btn-outline-light bg-white btn-icon position-relative me-1" id="notification_popup">
+                    <a href="javascript:void(0);" class="btn btn-outline-light bg-white btn-icon position-relative me-1"
+                        id="notification_popup">
                         <i class="ti ti-bell"></i>
                         @if($unreadNotifications->count() > 0)
-                            <span class="notification-status-dot"></span>
+                        <span class="notification-status-dot"></span>
                         @endif
                     </a>
                     <div class="dropdown-menu dropdown-menu-end notification-dropdown p-4">
-                        <div
-                            class="d-flex align-items-center justify-content-between border-bottom p-0 pb-3 mb-3">
+                        <div class="d-flex align-items-center justify-content-between border-bottom p-0 pb-3 mb-3">
                             <h4 class="notification-title">Notifications ({{ $unreadNotifications->count() }})</h4>
                             <div class="d-flex align-items-center">
-                                <a href="{{ route('admin.notification.mark-all-read') }}" class="text-primary fs-15 me-3 lh-1">Mark all as read</a>
+                                <a href="{{ route('admin.notification.mark-all-read') }}"
+                                    class="text-primary fs-15 me-3 lh-1">Mark all as read</a>
                             </div>
                         </div>
 
                         <div class="noti-content">
                             <div class="d-flex flex-column">
                                 @isset($unreadNotifications)
-                                    @foreach ($unreadNotifications as $notification)
-                                        <div class="border-bottom mb-3 pb-3">
-                                            <a href="{{ route('admin.application.show', [$notification->data['application_id']]) }}">
-                                                <div class="d-flex">
-                                                    <span class="avatar avatar-lg me-2 flex-shrink-0">
-                                                        <img src="{{ $notification->data['img'] }}" alt="Profile">
-                                                    </span>
-                                                    <div class="flex-grow-1">
-                                                        <p class="mb-1">{!! $notification->data['message'] !!}</p>
-                                                        <span>{{ $notification->created_at->diffForHumans() }}</span>
-                                                    </div>
-                                                </div>
-                                            </a>
+                                @foreach ($unreadNotifications as $notification)
+                                <div class="border-bottom mb-3 pb-3">
+                                    <a
+                                        href="{{ route('admin.application.show', [$notification->data['application_id']]) }}">
+                                        <div class="d-flex">
+                                            <span class="avatar avatar-lg me-2 flex-shrink-0">
+                                                <img src="{{ $notification->data['img'] }}" alt="Profile">
+                                            </span>
+                                            <div class="flex-grow-1">
+                                                <p class="mb-1">{!! $notification->data['message'] !!}</p>
+                                                <span>{{ $notification->created_at->diffForHumans() }}</span>
+                                            </div>
                                         </div>
-                                    @endforeach
+                                    </a>
+                                </div>
+                                @endforeach
                                 @endisset
                             </div>
                         </div>
                         <div class="d-flex p-0">
-                            <a href="javascript:void(0);" class="btn btn-light w-100 me-2" onclick="closeNotification()">Cancel</a>
+                            <a href="javascript:void(0);" class="btn btn-light w-100 me-2"
+                                onclick="closeNotification()">Cancel</a>
                             <a href="{{ route('admin.notification.index') }}" class="btn btn-primary w-100">View All</a>
                         </div>
                     </div>
                 </div>
                 <div class="pe-1">
-                    <a href="javascript:void(0);" class="btn btn-outline-light bg-white btn-icon me-1" id="btnFullscreen">
+                    <a href="javascript:void(0);" class="btn btn-outline-light bg-white btn-icon me-1"
+                        id="btnFullscreen">
                         <i class="ti ti-maximize"></i>
                     </a>
                 </div>
@@ -83,14 +87,25 @@
                     <a href="javascript:void(0);" class="dropdown-toggle d-flex align-items-center"
                         data-bs-toggle="dropdown">
                         <span class="avatar avatar-md rounded">
-                            <img src="{{ storage_asset((optional(auth()->guard('admin')->user())->img ?? 'users/default.jpg')) }}" alt="Img" class="img-fluid">
+                            @php
+                            $adminUser = auth()->guard('admin')->user();
+                            @endphp
+                            @if($adminUser && $adminUser->image)
+                            <img src="{{ asset('storage/'.$adminUser->image->url) }}" alt="Img" class="img-fluid">
+                            @else
+                            <img src="{{ asset('assets/img/profiles/avatar-02.jpg') }}" alt="Img" class="img-fluid">
+                            @endif
                         </span>
                     </a>
                     <div class="dropdown-menu">
                         <div class="d-block">
                             <div class="d-flex align-items-center p-2">
                                 <span class="avatar avatar-md me-2 online avatar-rounded">
-                                    <img src="{{ storage_asset((optional(auth()->guard('admin')->user())->img ?? 'users/default.jpg')) }}" alt="img">
+                                    @if($adminUser && $adminUser->image)
+                                    <img src="{{ asset('storage/'.$adminUser->image->url) }}" alt="img">
+                                    @else
+                                    <img src="{{ asset('assets/img/profiles/avatar-02.jpg') }}" alt="img">
+                                    @endif
                                 </span>
                                 <div>
                                     <h6>{{ auth()->guard('admin')->user()->name }}</h6>
@@ -98,14 +113,17 @@
                                 </div>
                             </div>
                             <hr class="m-0">
-                            <a class="dropdown-item d-inline-flex align-items-center p-2" href="{{ route('admin.profile.index') }}">
+                            <a class="dropdown-item d-inline-flex align-items-center p-2"
+                                href="{{ route('admin.profile.index') }}">
                                 <i class="ti ti-user-circle me-2"></i>My Profile
                             </a>
-                            {{-- <a class="dropdown-item d-inline-flex align-items-center p-2" href="{{ route('admin.setting.index', ['educom']) }}">
+                            {{-- <a class="dropdown-item d-inline-flex align-items-center p-2"
+                                href="{{ route('admin.setting.index', ['educom']) }}">
                                 <i class="ti ti-settings me-2"></i>Settings
                             </a> --}}
                             <hr class="m-0">
-                            <a onclick="logout()" class="dropdown-item d-inline-flex align-items-center p-2" href="javascript:void(0);">
+                            <a onclick="logout()" class="dropdown-item d-inline-flex align-items-center p-2"
+                                href="javascript:void(0);">
                                 <i class="ti ti-login me-2"></i>
                                 Logout
                             </a>
@@ -135,9 +153,9 @@
 </div>
 
 @section('js')
-    <script>
-        function closeNotification() {
-            $("#notification_item").removeClass("notification-item-show");
-        }
-    </script>
+<script>
+    function closeNotification() {
+        $("#notification_item").removeClass("notification-item-show");
+    }
+</script>
 @endsection
