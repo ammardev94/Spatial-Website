@@ -86,14 +86,14 @@
                             <div class="form-group">
                                 <label for="visibility">Search Engine Visibility (Robots Tag)</label>
                                 <select class="form-select" name="visibility" id="visibility">
-                                    <option value="index, follow" {{ old('visibility', $page->visibility) == 'index,
-                                        follow' ? 'selected' : '' }}>index, follow (Default)</option>
-                                    <option value="noindex, follow" {{ old('visibility', $page->visibility) == 'noindex,
-                                        follow' ? 'selected' : '' }}>noindex, follow</option>
-                                    <option value="index, nofollow" {{ old('visibility', $page->visibility) == 'index,
-                                        nofollow' ? 'selected' : '' }}>index, nofollow</option>
-                                    <option value="noindex, nofollow" {{ old('visibility', $page->visibility) ==
-                                        'noindex, nofollow' ? 'selected' : '' }}>noindex, nofollow</option>
+                                    <option value="index, follow" {{ $page->visibility == 'index, follow' ? 'selected' :
+                                        '' }}>index, follow (Default)</option>
+                                    <option value="noindex, follow" {{ $page->visibility == 'noindex, follow' ?
+                                        'selected' : '' }}>noindex, follow</option>
+                                    <option value="index, nofollow" {{ $page->visibility == 'index, nofollow' ?
+                                        'selected' : '' }}>index, nofollow</option>
+                                    <option value="noindex, nofollow" {{ $page->visibility == 'noindex, nofollow' ?
+                                        'selected' : '' }}>noindex, nofollow</option>
                                 </select>
                             </div>
                         </div>
@@ -121,7 +121,7 @@
 @section('js')
 
 <script type="text/javascript">
-    $(document).ready(function  () {
+    $(document).ready(function () {
 
         $("#editPageForm").validate({
             rules: {
@@ -175,19 +175,15 @@
             errorElement: "label",
             validClass: "is-valid",
             errorClass: "is-invalid text-danger",
-            highlight: functio n (element, errorClass, validClass) {
+            highlight: function (element, errorClass, validClass) {
                 $(element).addClass(errorClass).removeClass(validClass);
             },
-            unhighlight: functi on (element, errorClass, validClass) {
+            unhighlight: function (element, errorClass, validClass) {
                 $(element).removeClass(errorClass).addClass(validClass);
             },
-            submitHandler: funct ion (form) {
+            submitHandler: function (form) {
 
                 $(form).find('textarea[name="page_description"]').val($('#summernote').summernote('code'));
-
-                let formData = $(form).serializeArray();
-                console.log(formData                                       let data = $(form).serialize(                    console.log("form data", dat                    console.log($(form).attr('action                    console.log($(form).attr('method                                     $.aja                        url: $(form).attr('action                        type: $(form).attr('method                        data: da                        success: function(response                            console.log("Form submitted successfully                            window.location.href = "{{ route('cms.page.index') }                                               error: function(xhr                            console.log("An error occurred: ", xhr.responseTex                                                              */
-
                 form.submit();
             }
         });

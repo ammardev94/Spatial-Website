@@ -40,7 +40,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <h3 class="card-title mb-0">Project List</h3>
                     <a class="btn btn-primary" href="{{ route('admin.projects.create') }}">
-                        <i class="fas fa-plus"></i> Add New Project
+                        <i class="fas fa-plus"></i>
                     </a>
                 </div>
             </div>

@@ -38,9 +38,6 @@ class ProjectController extends Controller
         try {
             $validated = $request->validated();
 
-            // Handle overview if it comes as separate fields in the form (might need adjustments depending on UI)
-            // For now, assume it's already an array from the request
-
             $project = Project::create($validated);
 
             $this->handleImages($request, $project);
@@ -90,7 +87,6 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         try {
-            // Delete all associated images from storage
             $images = $project->morphMany(Image::class , 'imageable')->get();
             foreach ($images as $image) {
                 Storage::disk('public')->delete($image->url);
@@ -113,7 +109,6 @@ class ProjectController extends Controller
      */
     private function handleImages($request, $project)
     {
-        // Handle Feature Image
         if ($request->hasFile('feature_img')) {
             if ($project->feature_img) {
                 Storage::disk('public')->delete($project->feature_img->url);
@@ -123,7 +118,6 @@ class ProjectController extends Controller
             $project->feature_img()->create(['url' => $path, 'tag' => 'feature_img']);
         }
 
-        // Handle Main Image
         if ($request->hasFile('main_img')) {
             if ($project->main_img) {
                 Storage::disk('public')->delete($project->main_img->url);
@@ -133,7 +127,6 @@ class ProjectController extends Controller
             $project->main_img()->create(['url' => $path, 'tag' => 'main_img']);
         }
 
-        // Handle Gallery Images (Append)
         if ($request->hasFile('gallery')) {
             foreach ($request->file('gallery') as $file) {
                 $path = $file->store('projects/gallery', 'public');
@@ -141,8 +134,6 @@ class ProjectController extends Controller
             }
         }
 
-    // Note: If you wanted to REPLACE the entire gallery, you'd delete old ones first.
-    // If you want to delete specific images from the gallery, you'd need another method.
     }
 
     /**

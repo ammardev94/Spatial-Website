@@ -136,7 +136,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Update Project</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save me-1"></i>Save</button>
                     <a href="{{ route('admin.projects.index') }}" class="btn btn-default">Cancel</a>
                 </div>
             </div>
@@ -176,21 +176,38 @@
     $('.delete-gallery-img').on('click', function () {
         let btn = $(this);
         let id = btn.data('id');
-        if (confirm('Delete this image from gallery?')) {
-            $.ajax({
-                url: "{{ url('admin/projects/image') }}/" + id + "/delete",
-                type: "DELETE",
-                data: { _token: "{{ csrf_token() }}" },
-                success: function (resp) {
-                    if (resp.status) {
-                        btn.closest('.gallery-item').remove();
-                    } else {
-                        alert(resp.message);
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Delete this image from gallery?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            customClass: {
+                confirmButton: 'btn btn-danger me-2',
+                cancelButton: 'btn btn-secondary'
+            },
+            buttonsStyling: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "{{ url('admin/projects/image') }}/" + id + "/delete",
+                    type: "DELETE",
+                    data: { _token: "{{ csrf_token() }}" },
+                    success: function (resp) {
+                        if (resp.status) {
+                            btn.closest('.gallery-item').remove();
+                            Swal.fire("Deleted!", "Image has been removed.", "success");
+                        } else {
+                            Swal.fire("Error!", resp.message, "error");
+                        }
+                    },
+                    error: function () {
+                        Swal.fire("Error!", "Server error deleting image.", "error");
                     }
-                },
-                error: function () { alert('Server error deleting image.'); }
-            });
-        }
+                });
+            }
+        });
     });
     });
 </script>

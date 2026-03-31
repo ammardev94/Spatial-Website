@@ -105,7 +105,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Save Project</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save me-1"></i>Save</button>
                     <a href="{{ route('admin.projects.index') }}" class="btn btn-default">Cancel</a>
                 </div>
             </div>

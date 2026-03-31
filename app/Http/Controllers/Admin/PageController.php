@@ -26,7 +26,7 @@ class PageController extends Controller
      */
     public function index(Request $request): View
     {
-        Log::info($request->method().' '.$request->url());
+        Log::info($request->method() . ' ' . $request->url());
 
         $pages = Page::with('user')->paginate(10);
 
@@ -40,7 +40,7 @@ class PageController extends Controller
      */
     public function create(Request $request): View
     {
-        Log::info($request->method().' '.$request->url());
+        Log::info($request->method() . ' ' . $request->url());
 
         return view('admin.cms.page.create');
     }
@@ -65,7 +65,8 @@ class PageController extends Controller
             Session::Flash('msg.success', 'Page saved successfully.');
 
             return redirect()->route('cms.page.index');
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
 
             Session::Flash('msg.error', $e->getMessage());
 
@@ -94,18 +95,22 @@ class PageController extends Controller
      */
     public function update($id, PageFormRequest $request): RedirectResponse
     {
+        Log::info($request->all());
+
         try {
 
             $validated = $request->validated();
 
             $validated['updated_at'] = Carbon::now();
 
-            Page::whereId($id)->update($validated);
+            $page = Page::findOrFail($id);
+            $page->update($validated);
 
             Session::Flash('msg.success', 'Page updated successfully.');
 
             return redirect()->route('cms.page.index');
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
 
             Session::Flash('msg.error', $e->getMessage());
 
@@ -154,16 +159,16 @@ class PageController extends Controller
         try {
 
             $page = Page::findOrFail($id);
-            if (! $page) {
+            if (!$page) {
                 Session::Flash('msg.error', 'Page not found');
             }
 
-            $baseDirectory = 'page-images/'.$page->id;
+            $baseDirectory = 'page-images/' . $page->id;
 
             $filteredInputs = collect($request->except(['_token', '_method']))
                 ->filter(function ($value, $key) use ($request) {
-                    return ! $request->hasFile($key);
-                });
+                return !$request->hasFile($key);
+            });
 
             $metaData = [];
             if ($filteredInputs->count() > 0) {
@@ -174,13 +179,13 @@ class PageController extends Controller
 
             foreach ($metaData as $key => $value) {
                 PageMeta::updateOrCreate(
-                    [
-                        'ref_id' => $page->id,
-                        'ref_key' => $key,
-                    ],
-                    [
-                        'ref_value' => $value,
-                    ]
+                [
+                    'ref_id' => $page->id,
+                    'ref_key' => $key,
+                ],
+                [
+                    'ref_value' => $value,
+                ]
                 );
             }
 
@@ -204,10 +209,10 @@ class PageController extends Controller
 
             foreach ($fileData as $data) {
                 PageFile::updateOrCreate(
-                    [
-                        'ref_id' => $page->id,
-                        'ref_point' => $data['ref_point'],
-                    ],
+                [
+                    'ref_id' => $page->id,
+                    'ref_point' => $data['ref_point'],
+                ],
                     $data
                 );
             }
@@ -222,7 +227,7 @@ class PageController extends Controller
             $allFiles = Storage::disk('public')->allFiles($baseDirectory);
 
             $imagesToBeDelete = collect($allFiles)->filter(function ($image) use ($currentImages) {
-                if (! in_array($image, $currentImages)) {
+                if (!in_array($image, $currentImages)) {
                     return $image;
                 }
             });
@@ -234,7 +239,8 @@ class PageController extends Controller
             Session::Flash('msg.success', 'Page Meta updated successfully');
 
             return redirect()->route('cms.page.index');
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
 
             DB::rollback();
             Session::Flash('msg.error', $e->getMessage());
