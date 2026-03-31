@@ -10,6 +10,7 @@ use App\Http\Requests\ProjectFormRequest;
 use Illuminate\Support\Facades\Storage;
 use Exception;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -37,6 +38,7 @@ class ProjectController extends Controller
     {
         try {
             $validated = $request->validated();
+            $validated['slug'] = Str::slug($validated['title']);
 
             $project = Project::create($validated);
 
@@ -67,6 +69,7 @@ class ProjectController extends Controller
     {
         try {
             $validated = $request->validated();
+            $validated['slug'] = Str::slug($validated['title']);
 
             $project->update($validated);
 

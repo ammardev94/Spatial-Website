@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ProjectFormRequest extends FormRequest
 {
@@ -23,7 +24,7 @@ class ProjectFormRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'description' => 'required|string',
             'location' => 'nullable|string|max:255',
             'overview' => 'nullable|array',
             'feature_img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',

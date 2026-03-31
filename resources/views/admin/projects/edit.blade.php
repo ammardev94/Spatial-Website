@@ -149,11 +149,12 @@
 @section('js')
 
 <script>
-$(document).ready(function () {
+    $(document).ready(function () {
 
-    $('#summernote').summernote({ height: 200 });
+        $('#summernote').summernote({ height: 200 });
 
-    let overviewCount = {{ isset($count) ? $count : 0 }};
+        let overviewCount = {{ isset($count) ? $count : 0
+    }};
 
     $('#add-overview').on('click', function () {
         let row = `
