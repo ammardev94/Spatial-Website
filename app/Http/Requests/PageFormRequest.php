@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PageFormRequest extends FormRequest
 {
@@ -27,7 +28,7 @@ class PageFormRequest extends FormRequest
             'page_title' => 'required|min:2',
             'page_description' => 'required',
             'canonical_url' => 'required|url',
-            'visibility' => 'required|in:no-follow,no-index',
+            'visibility' => ['required', Rule::in(['index, follow', 'noindex, follow', 'index, nofollow', 'noindex, nofollow'])],
             'status' => 'required|boolean',
             'type' => 'required|boolean',
         ];

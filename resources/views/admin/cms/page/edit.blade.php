@@ -35,67 +35,73 @@
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="title">Title</label>
-                                <input type="text" class="form-control" name="title" value="{{ $page->title }}" id="title" placeholder="Enter title">
+                                <input type="text" class="form-control" name="title" value="{{ $page->title }}"
+                                    id="title" placeholder="Enter title">
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="slug">Slug</label>
-                                <input type="text" class="form-control" name="slug" value="{{ $page->slug }}" id="slug" placeholder="Enter slug">
+                                <input type="text" class="form-control" name="slug" value="{{ $page->slug }}" id="slug"
+                                    placeholder="Enter slug">
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="page_title">Page Title</label>
-                                <input type="text" class="form-control" name="page_title" value="{{ $page->page_title }}" id="page_title" placeholder="Enter page title">
+                                <input type="text" class="form-control" name="page_title"
+                                    value="{{ $page->page_title }}" id="page_title" placeholder="Enter page title">
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="canonical_url">Canonical Url</label>
-                                <input type="url" class="form-control" name="canonical_url" value="{{ $page->canonical_url }}" id="canonical_url" placeholder="http://">
+                                <input type="url" class="form-control" name="canonical_url"
+                                    value="{{ $page->canonical_url }}" id="canonical_url" placeholder="http://">
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox"
-                                        class="form-check-input"
-                                        id="status"
-                                        name="status"
-                                        @if($page->status == '1') checked @endif>
-                                    <label class="custom-control-label" for="status">Status</label>
+                                <label for="status">Publish Status</label>
+                                <div class="form-check form-switch mt-2">
+                                    <input type="hidden" name="status" value="0">
+                                    <input type="checkbox" class="form-check-input" id="status" name="status" value="1"
+                                        {{ old('status', $page->status) == '1' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="status">Active</label>
                                 </div>
-                                <input type="hidden" name="status" value="{{ $page->status }}">
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox"
-                                        class="form-check-input"
-                                        id="type"
-                                        name="type"
-                                        @if($page->type == '1') checked @endif>
-                                    <label class="custom-control-label" for="type">Type</label>
+                                <label for="type">Page Type</label>
+                                <div class="form-check form-switch mt-2">
+                                    <input type="hidden" name="type" value="0">
+                                    <input type="checkbox" class="form-check-input" id="type" name="type" value="1" {{
+                                        old('type', $page->type) == '1' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="type">Custom Page</label>
                                 </div>
-                                <input type="hidden" name="type" value="{{ $page->type }}">
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
-                                <label for="visibility">Visibility</label>
+                                <label for="visibility">Search Engine Visibility (Robots Tag)</label>
                                 <select class="form-select" name="visibility" id="visibility">
-                                    <option value="" @if($page->visibility == '') selected @endif>-- select --</option>
-                                    <option value="no-follow" @if($page->visibility == 'no-follow') selected @endif>no-follow</option>
-                                    <option value="no-index" @if($page->visibility == 'no-index') selected @endif>no-index</option>
+                                    <option value="index, follow" {{ old('visibility', $page->visibility) == 'index,
+                                        follow' ? 'selected' : '' }}>index, follow (Default)</option>
+                                    <option value="noindex, follow" {{ old('visibility', $page->visibility) == 'noindex,
+                                        follow' ? 'selected' : '' }}>noindex, follow</option>
+                                    <option value="index, nofollow" {{ old('visibility', $page->visibility) == 'index,
+                                        nofollow' ? 'selected' : '' }}>index, nofollow</option>
+                                    <option value="noindex, nofollow" {{ old('visibility', $page->visibility) ==
+                                        'noindex, nofollow' ? 'selected' : '' }}>noindex, nofollow</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-12 mb-3">
                             <div class="form-group">
                                 <label for="page_description">Page Description</label>
-                                <textarea id="summernote" name="page_description">{{ $page->page_description }}</textarea>
+                                <textarea id="summernote"
+                                    name="page_description">{{ $page->page_description }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -103,7 +109,8 @@
                 <!-- /.card-body -->
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>&nbsp;&nbsp;Save</button>
-                    <a href="{{ route('cms.page.index') }}" class="btn btn-default"><i class="fas fa-times-circle"></i>&nbsp;&nbsp;Cancel</a>
+                    <a href="{{ route('cms.page.index') }}" class="btn btn-default"><i
+                            class="fas fa-times-circle"></i>&nbsp;&nbsp;Cancel</a>
                 </div>
             </form>
         </div>
@@ -114,7 +121,7 @@
 @section('js')
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function  () {
 
         $("#editPageForm").validate({
             rules: {
@@ -168,45 +175,18 @@
             errorElement: "label",
             validClass: "is-valid",
             errorClass: "is-invalid text-danger",
-            highlight: function(element, errorClass, validClass) {
+            highlight: functio n (element, errorClass, validClass) {
                 $(element).addClass(errorClass).removeClass(validClass);
             },
-            unhighlight: function(element, errorClass, validClass) {
+            unhighlight: functi on (element, errorClass, validClass) {
                 $(element).removeClass(errorClass).addClass(validClass);
             },
-            submitHandler: function(form) {
+            submitHandler: funct ion (form) {
 
                 $(form).find('textarea[name="page_description"]').val($('#summernote').summernote('code'));
 
-                let status = $(form).find('#status').is(':checked') ? 1 : 0;
-                let type = $(form).find('#type').is(':checked') ? 1 : 0;
-
-                $(form).find('input[name="status"]').val(status);
-                $(form).find('input[name="type"]').val(type);
-
                 let formData = $(form).serializeArray();
-                console.log(formData);
-
-                /*
-                let data = $(form).serialize();
-
-                console.log("form data", data);
-                console.log($(form).attr('action'))
-                console.log($(form).attr('method'))
-                
-                $.ajax({
-                    url: $(form).attr('action'),
-                    type: $(form).attr('method'),
-                    data: data,
-                    success: function(response) {
-                        console.log("Form submitted successfully");
-                        window.location.href = "{{ route('cms.page.index') }}";
-                    },
-                    error: function(xhr) {
-                        console.log("An error occurred: ", xhr.responseText);
-                    }
-                });
-                */
+                console.log(formData                                       let data = $(form).serialize(                    console.log("form data", dat                    console.log($(form).attr('action                    console.log($(form).attr('method                                     $.aja                        url: $(form).attr('action                        type: $(form).attr('method                        data: da                        success: function(response                            console.log("Form submitted successfully                            window.location.href = "{{ route('cms.page.index') }                                               error: function(xhr                            console.log("An error occurred: ", xhr.responseTex                                                              */
 
                 form.submit();
             }
