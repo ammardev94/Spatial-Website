@@ -147,82 +147,113 @@
 @endsection
 
 @section('js')
-<script>
-    $(document).ready(function () {
-        $('#summernote').summernote({ height: 200 });
 
-        let overviewCount = {{ isset($count) ? $count : 0
-    }};
+<script>
+$(document).ready(function () {
+
+    $('#summernote').summernote({ height: 200 });
+
+    let overviewCount = {{ isset($count) ? $count : 0 }};
+
     $('#add-overview').on('click', function () {
         let row = `
-                <div class="row overview-row mb-2">
-                    <div class="col-md-5">
-                        <input type="text" name="overview[${overviewCount}][label]" class="form-control" placeholder="Label">
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" name="overview[${overviewCount}][value]" class="form-control" placeholder="Value">
-                    </div>
-                    <div class="col-md-1">
-                        <button type="button" class="btn btn-danger remove-overview"><i class="fas fa-trash"></i></button>
-                    </div>
-                </div>`;
+            <div class="row overview-row mb-2">
+                <div class="col-md-5">
+                    <input type="text" name="overview[${overviewCount}][label]" class="form-control" placeholder="Label">
+                </div>
+                <div class="col-md-6">
+                    <input type="text" name="overview[${overviewCount}][value]" class="form-control" placeholder="Value">
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-danger remove-overview">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>`;
         $('#overview-items').append(row);
         overviewCount++;
     });
 
-    cument).on('click', '.remove-overview', function () {
-        closest('.overview-row').remove();
+    $(document).on('click', '.remove-overview', function () {
+        $(this).closest('.overview-row').remove();
     });
-    #edit    orm").validate({
-    rules: {
-        title: {             required                    minlength: 2                        descr                            true
-            messages: {            le                   d: "Please e            itle",
-                gth: "Title must be at least 2 characters"                        description: "Please enter a project desc             },            ement: "label",
-                validClass: "is-valid",
-                    las        id text - danger",
-                function (element, erro        dClass) {
-                    $(element).addCl        ss).removeClass(validClass);
-                },
-        unhighli            lement, errorClass, validClass) {
-                    $(element).err        Class(validClass);
-                },
-                submitHandler: funct                     $(form).find('textarea[name="description"]').val        ote        e('code'));
-                form.subm
-            });
 
-            $('.delete-gallery-img').on('click', function () {
-                let btn = $(thi            id = btn.data('              re({
-        title: "Are you sure?",
-                    text: "Delete this image from gallery?",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Yes, delete it!",
-                    customClass: {
-                    confirmButton: 'btn btn-danger me-2',
-                    cancelButton: 'btn btn-secondary'
-                },
-                    buttonsStyling: false
+    $("#edit_form").validate({
+        rules: {
+            title: {
+                required: true,
+                minlength: 2
+            },
+            description: {
+                required: true
+            }
+        },
+        messages: {
+            title: {
+                required: "Please enter a title",
+                minlength: "Title must be at least 2 characters"
+            },
+            description: {
+                required: "Please enter a project description"
+            }
+        },
+        errorElement: "label",
+        errorClass: "text-danger",
+        validClass: "is-valid",
+
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass(errorClass).removeClass(validClass);
+        },
+
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass(errorClass).addClass(validClass);
+        },
+
+        submitHandler: function (form) {
+            $(form).find('textarea[name="description"]').val($('#summernote').summernote('code'));
+            form.submit();
+        }
+    });
+
+    $('.delete-gallery-img').on('click', function () {
+        let btn = $(this);
+        let id = btn.data('id');
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Delete this image from gallery?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            customClass: {
+                confirmButton: 'btn btn-danger me-2',
+                cancelButton: 'btn btn-secondary'
+            },
+            buttonsStyling: false
         }).then((result) => {
-                        if (result.isConfirmed) {
-                            $.ajax({
-                                url: "{{ url('admin/projects/image') }}/" + id + "/delete",
-                                type: "DELETE",
-                                data: { _token: "{{ csrf_token() }}" },
-                                success: function (resp) {
-                                    if (resp.status) {
-                                        btn.closest('.gallery-item').remove();
-                                        Swal.fire("Deleted!", "Image has been removed.", "success");
-                                    } else {
-                                        Swal.fire("Error!", resp.message, "error");
-                                    }
-                                },
-                                error: function () {
-                                    Swal.fire("Error!", "Server error deleting image.", "error");
-                                }
-                            });
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "{{ url('admin/projects/image') }}/" + id + "/delete",
+                    type: "DELETE",
+                    data: { _token: "{{ csrf_token() }}" },
+                    success: function (resp) {
+                        if (resp.status) {
+                            btn.closest('.gallery-item').remove();
+                            Swal.fire("Deleted!", "Image has been removed.", "success");
+                        } else {
+                            Swal.fire("Error!", resp.message, "error");
                         }
-                    });
+                    },
+                    error: function () {
+                        Swal.fire("Error!", "Server error deleting image.", "error");
+                    }
+                });
+            }
         });
     });
+
+});
 </script>
+
+
 @endsection
