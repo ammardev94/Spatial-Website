@@ -21,7 +21,8 @@
 <div class="row">
     <div class="col-md-12">
         @include('include.messages')
-        <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data"
+            id="createProjectForm">
             @csrf
             <div class="card card-primary">
                 <div class="card-header">
@@ -84,20 +85,23 @@
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="feature_img">Feature Image (Thumbnail)</label>
-                                <input type="file" class="form-control" name="feature_img" id="feature_img shadow-none">
+                                <div id="feature_img_preview" class="mb-2"></div>
+                                <input type="file" class="form-control shadow-none" name="feature_img" id="feature_img">
                                 @error('feature_img') <span class="text-danger small">{{ $message }}</span> @enderror
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="main_img">Main Hero Image</label>
-                                <input type="file" class="form-control" name="main_img" id="main_img shadow-none">
+                                <div id="main_img_preview" class="mb-2"></div>
+                                <input type="file" class="form-control shadow-none" name="main_img" id="main_img">
                                 @error('main_img') <span class="text-danger small">{{ $message }}</span> @enderror
                             </div>
                         </div>
                         <div class="col-md-12 mb-3">
                             <div class="form-group">
                                 <label for="gallery">Gallery (Multiple Images)</label>
+                                <div id="gallery_preview" class="row mb-2"></div>
                                 <input type="file" class="form-control" name="gallery[]" id="gallery" multiple>
                                 @error('gallery.*') <span class="text-danger small">{{ $message }}</span> @enderror
                             </div>
@@ -139,6 +143,74 @@
 
         $(document).on('click', '.remove-overview', function () {
             $(this).closest('.overview-row').remove();
+        });
+
+        $("#createProjectForm").validate({
+            rules: {
+                title: {
+                    required: true,
+                    minlength: 2
+                },
+                description: {
+                    required: true
+                }
+            },
+            messages: {
+                title: {
+                    required: "Please enter a project title",
+                    minlength: "Title must be at least 2 characters"
+                },
+                description: "Please enter a project description"
+            },
+            errorElement: "label",
+            validClass: "is-valid",
+            errorClass: "is-invalid text-danger",
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass(errorClass).removeClass(validClass);
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass(errorClass).addClass(validClass);
+            },
+            submitHandler: function (form) {
+                $(form).find('textarea[name="description"]').val($('#summernote').summernote('code'));
+                form.submit();
+            }
+        });
+
+        // Image Previews
+        function readURL(input, previewId) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $(`#${previewId}`).html(`<img src="${e.target.result}" width="150" class="img-thumbnail">`);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $('#feature_img').change(function () {
+            readURL(this, 'feature_img_preview');
+        });
+
+        $('#main_img').change(function () {
+            readURL(this, 'main_img_preview');
+        });
+
+        $('#gallery').change(function () {
+            $('#gallery_preview').html('');
+            if (this.files) {
+                Array.from(this.files).forEach(file => {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#gallery_preview').append(`
+                            <div class="col-md-2 mb-2">
+                                <img src="${e.target.result}" class="img-thumbnail w-100" style="height: 100px; object-fit: cover;">
+                            </div>
+                        `);
+                    }
+                    reader.readAsDataURL(file);
+                });
+            }
         });
     });
 </script>

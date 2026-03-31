@@ -21,7 +21,8 @@
 <div class="row">
     <div class="col-md-12">
         @include('include.messages')
-        <form action="{{ route('admin.projects.update', $project->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.projects.update', $project->id) }}" method="POST" enctype="multipart/form-data"
+            id="editProjectForm">
             @csrf
             @method('PUT')
             <div class="card card-primary">
@@ -169,46 +170,59 @@
         overviewCount++;
     });
 
-    $(document).on('click', '.remove-overview', function () {
-        $(this).closest('.overview-row').remove();
+    cument).on('click', '.remove-overview', function () {
+        closest('.overview-row').remove();
     });
+    #edit    orm").validate({
+    rules: {
+        title: {             required                    minlength: 2                        descr                            true
+            messages: {            le                   d: "Please e            itle",
+                gth: "Title must be at least 2 characters"                        description: "Please enter a project desc             },            ement: "label",
+                validClass: "is-valid",
+                    las        id text - danger",
+                function (element, erro        dClass) {
+                    $(element).addCl        ss).removeClass(validClass);
+                },
+        unhighli            lement, errorClass, validClass) {
+                    $(element).err        Class(validClass);
+                },
+                submitHandler: funct                     $(form).find('textarea[name="description"]').val        ote        e('code'));
+                form.subm
+            });
 
-    $('.delete-gallery-img').on('click', function () {
-        let btn = $(this);
-        let id = btn.data('id');
-
-        Swal.fire({
-            title: "Are you sure?",
-            text: "Delete this image from gallery?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Yes, delete it!",
-            customClass: {
-                confirmButton: 'btn btn-danger me-2',
-                cancelButton: 'btn btn-secondary'
-            },
-            buttonsStyling: false
+            $('.delete-gallery-img').on('click', function () {
+                let btn = $(thi            id = btn.data('              re({
+        title: "Are you sure?",
+                    text: "Delete this image from gallery?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, delete it!",
+                    customClass: {
+                    confirmButton: 'btn btn-danger me-2',
+                    cancelButton: 'btn btn-secondary'
+                },
+                    buttonsStyling: false
         }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "{{ url('admin/projects/image') }}/" + id + "/delete",
-                    type: "DELETE",
-                    data: { _token: "{{ csrf_token() }}" },
-                    success: function (resp) {
-                        if (resp.status) {
-                            btn.closest('.gallery-item').remove();
-                            Swal.fire("Deleted!", "Image has been removed.", "success");
-                        } else {
-                            Swal.fire("Error!", resp.message, "error");
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: "{{ url('admin/projects/image') }}/" + id + "/delete",
+                                type: "DELETE",
+                                data: { _token: "{{ csrf_token() }}" },
+                                success: function (resp) {
+                                    if (resp.status) {
+                                        btn.closest('.gallery-item').remove();
+                                        Swal.fire("Deleted!", "Image has been removed.", "success");
+                                    } else {
+                                        Swal.fire("Error!", resp.message, "error");
+                                    }
+                                },
+                                error: function () {
+                                    Swal.fire("Error!", "Server error deleting image.", "error");
+                                }
+                            });
                         }
-                    },
-                    error: function () {
-                        Swal.fire("Error!", "Server error deleting image.", "error");
-                    }
-                });
-            }
+                    });
         });
-    });
     });
 </script>
 @endsection
