@@ -9,7 +9,7 @@ class Image extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['url', 'imageable_id', 'imageable_type'];
+    protected $fillable = ['url', 'tag', 'imageable_id', 'imageable_type'];
 
     /**
      * Get the parent imageable model.
