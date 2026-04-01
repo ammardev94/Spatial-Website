@@ -36,7 +36,7 @@
                     <table class="table table-hover table-striped mb-0">
                         <thead>
                             <tr>
-                                <th style="width: 80px">Feature</th>
+                                <th style="width: 80px"></th>
                                 <th>Title</th>
                                 <th>Status</th>
                                 <th>Publish Date</th>

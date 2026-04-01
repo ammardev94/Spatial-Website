@@ -178,10 +178,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer text-end">
+                <div class="card-footer text-start">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save me-1"></i>Save</button>
                     <a href="{{ route('admin.insights.index') }}" class="btn btn-muted">Cancel</a>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-save me-1"></i>Update
-                        Insight</button>
                 </div>
             </div>
         </form>
@@ -194,7 +193,6 @@
     $(document).ready(function () {
         $('.summernote').summernote({ height: 150 });
 
-        // Image Previews
         function readURL(input, previewId) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -247,7 +245,6 @@
             }
         });
 
-        // AJAX: Delete Gallery Image
         $('.delete-gallery-img').on('click', function () {
             let btn = $(this);
             let id = btn.data('id');
