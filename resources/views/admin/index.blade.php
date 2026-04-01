@@ -22,19 +22,39 @@
 
 <div class="row">
 
-    <!-- Total Insights -->
-    <div class="col-xxl-6 col-sm-6 d-flex">
-        <a href="javascript:void(0);" class="card flex-fill animate-card border-0">
+    <!-- Total Projects -->
+    <div class="col-xxl-4 col-sm-6 d-flex">
+        <a href="{{ route('admin.projects.index') }}" class="card flex-fill animate-card border-0">
             <div class="card-body">
                 <div class="d-flex align-items-center">
-                    <div class="avatar avatar-xl bg-danger-transparent me-2 p-1">
-                        <img src="{{ asset('assets/img/icons/company-icon-04.svg') }}" alt="img">
+                    <div class="avatar avatar-xl bg-primary-transparent me-2 p-1">
+                        <i class="ti ti-briefcase text-primary fs-24"></i>
                     </div>
                     <div class="overflow-hidden flex-fill">
                         <div class="d-flex align-items-center justify-content-between">
-                            <h2 class="counter">0</h2>
+                            <h2 class="counter">{{ $projects_count }}</h2>
                         </div>
-                        <p>Insights</p>
+                        <p class="mb-0">Projects</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <!-- /Total Projects -->
+
+    <!-- Total Insights -->
+    <div class="col-xxl-4 col-sm-6 d-flex">
+        <a href="{{ route('admin.insights.index') }}" class="card flex-fill animate-card border-0">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="avatar avatar-xl bg-danger-transparent me-2 p-1">
+                        <i class="ti ti-news text-danger fs-24"></i>
+                    </div>
+                    <div class="overflow-hidden flex-fill">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h2 class="counter">{{ $insights_count }}</h2>
+                        </div>
+                        <p class="mb-0">Insights</p>
                     </div>
                 </div>
             </div>
@@ -42,25 +62,25 @@
     </div>
     <!-- /Total Insights -->
 
-    <!-- Total Library -->
-    <div class="col-xxl-6 col-sm-6 d-flex">
-        <a href="javascript:void(0);" class="card flex-fill animate-card border-0">
+    <!-- Total Material & Finishes -->
+    <div class="col-xxl-4 col-sm-6 d-flex">
+        <a href="{{ route('admin.material_finishes.index') }}" class="card flex-fill animate-card border-0">
             <div class="card-body">
                 <div class="d-flex align-items-center">
-                    <div class="avatar avatar-xl me-2 bg-secondary-transparent p-1">
-                        <img src="{{ asset('assets/img/icons/company-icon-04.svg') }}" alt="img">
+                    <div class="avatar avatar-xl bg-secondary-transparent me-2 p-1">
+                        <i class="ti ti-layout-grid text-secondary fs-24"></i>
                     </div>
                     <div class="overflow-hidden flex-fill">
                         <div class="d-flex align-items-center justify-content-between">
-                            <h2 class="counter">0</h2>
+                            <h2 class="counter">{{ $materials_count }}</h2>
                         </div>
-                        <p>Services</p>
+                        <p class="mb-0">Material & Finishes</p>
                     </div>
                 </div>
             </div>
         </a>
     </div>
-    <!-- /Total Library -->
+    <!-- /Total Material & Finishes -->
 
 </div>
 

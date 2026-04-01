@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\PageMetaController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\InsightController;
+use App\Http\Controllers\Admin\MaterialFinishesController;
+use App\Http\Controllers\Admin\GeneralInformationController;
 use App\Http\Controllers\Admin\NotificationController;
 
 Route::group(['prefix' => 'admin'], function () {
@@ -70,6 +72,18 @@ Route::group(['prefix' => 'admin'], function () {
                 Route::put('/insights/{insight}/update', [InsightController::class , 'update'])->name('admin.insights.update');
                 Route::delete('/insights/{insight}/delete', [InsightController::class , 'destroy'])->name('admin.insights.destroy');
                 Route::delete('/insights/image/{image}/delete', [InsightController::class , 'deleteImage'])->name('admin.insights.image.delete');
+
+
+                Route::get('/material-finishes', [MaterialFinishesController::class , 'index'])->name('admin.material_finishes.index');
+                Route::get('/material-finishes/create', [MaterialFinishesController::class , 'create'])->name('admin.material_finishes.create');
+                Route::post('/material-finishes/store', [MaterialFinishesController::class , 'store'])->name('admin.material_finishes.store');
+                Route::get('/material-finishes/{materialFinish}/edit', [MaterialFinishesController::class , 'edit'])->name('admin.material_finishes.edit');
+                Route::put('/material-finishes/{materialFinish}/update', [MaterialFinishesController::class , 'update'])->name('admin.material_finishes.update');
+                Route::delete('/material-finishes/{materialFinish}/delete', [MaterialFinishesController::class , 'destroy'])->name('admin.material_finishes.destroy');
+
+
+                Route::get('/settings/general', [GeneralInformationController::class , 'edit'])->name('admin.settings.general.edit');
+                Route::put('/settings/general/update', [GeneralInformationController::class , 'update'])->name('admin.settings.general.update');
 
             }
             );

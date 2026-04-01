@@ -53,6 +53,23 @@
                                 <span>Insights</span>
                             </a>
                         </li>
+                        <li class="{{ request()->is('admin/material-finishes*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.material_finishes.index') }}">
+                                <i class="ti ti-layout-grid"></i>
+                                <span>Material & Finishes</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <h6 class="submenu-hdr"><span>SETTINGS</span></h6>
+                    <ul>
+                        <li class="{{ request()->is('admin/settings*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.settings.general.edit') }}">
+                                <i class="ti ti-settings"></i>
+                                <span>General Information</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>
