@@ -22,6 +22,7 @@ class ProjectFormRequest extends FormRequest
      */
     public function rules(): array
     {
+        dd(request()->all());
         return [
             'title' => 'required|string|max:255',
             'description' => 'required|string',

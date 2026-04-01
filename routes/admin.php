@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PageMetaController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\InsightController;
 use App\Http\Controllers\Admin\NotificationController;
 
 Route::group(['prefix' => 'admin'], function () {
@@ -60,6 +61,15 @@ Route::group(['prefix' => 'admin'], function () {
                 Route::put('/projects/{project}/update', [ProjectController::class , 'update'])->name('admin.projects.update');
                 Route::delete('/projects/{project}/delete', [ProjectController::class , 'destroy'])->name('admin.projects.destroy');
                 Route::delete('/projects/image/{image}/delete', [ProjectController::class , 'deleteImage'])->name('cms.projects.image.delete');
+
+
+                Route::get('/insights', [InsightController::class , 'index'])->name('admin.insights.index');
+                Route::get('/insights/create', [InsightController::class , 'create'])->name('admin.insights.create');
+                Route::post('/insights/store', [InsightController::class , 'store'])->name('admin.insights.store');
+                Route::get('/insights/{insight}/edit', [InsightController::class , 'edit'])->name('admin.insights.edit');
+                Route::put('/insights/{insight}/update', [InsightController::class , 'update'])->name('admin.insights.update');
+                Route::delete('/insights/{insight}/delete', [InsightController::class , 'destroy'])->name('admin.insights.destroy');
+                Route::delete('/insights/image/{image}/delete', [InsightController::class , 'deleteImage'])->name('admin.insights.image.delete');
 
             }
             );

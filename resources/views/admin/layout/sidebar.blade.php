@@ -47,6 +47,12 @@
                                 <span>Projects</span>
                             </a>
                         </li>
+                        <li class="{{ request()->is('admin/insights*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.insights.index') }}">
+                                <i class="ti ti-news"></i>
+                                <span>Insights</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>
