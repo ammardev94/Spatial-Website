@@ -15,6 +15,9 @@ class ServiceSectionItem extends Model
         'description',
         'video_url',
         'order',
+        'button_text',
+        'button_link',
+        'open_in_new_tab',
     ];
 
     /**

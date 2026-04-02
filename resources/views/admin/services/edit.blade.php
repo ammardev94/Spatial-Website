@@ -379,6 +379,30 @@
                                     placeholder="Bullet points or text block"></textarea>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold">Button Text</label>
+                                <input type="text" name="button_text" class="form-control form-control-sm"
+                                    placeholder="e.g. Learn More">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold">Button Link</label>
+                                <input type="text" name="button_link" class="form-control form-control-sm"
+                                    placeholder="URL or relative path">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" name="open_in_new_tab" value="1"
+                                        id="open_new_tab">
+                                    <label class="form-check-label small fw-bold" for="open_new_tab">Open Link in New
+                                        Tab</label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-12">
                             <div class="mb-0 text-end">
                                 <button type="submit" class="btn btn-primary btn-sm px-4 shadow-none">

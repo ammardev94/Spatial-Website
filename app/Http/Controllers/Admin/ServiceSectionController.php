@@ -92,10 +92,14 @@ class ServiceSectionController extends Controller
             'description' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
             'video_url' => 'nullable|string|max:500',
+            'button_text' => 'nullable|string|max:100',
+            'button_link' => 'nullable|string|max:500',
         ]);
 
         try {
-            $item = ServiceSectionItem::create($request->except('image'));
+            $data = $request->except('image');
+            $data['open_in_new_tab'] = $request->has('open_in_new_tab');
+            $item = ServiceSectionItem::create($data);
 
             if ($request->hasFile('image')) {
                 $path = $request->file('image')->store('services/sections', 'public');
