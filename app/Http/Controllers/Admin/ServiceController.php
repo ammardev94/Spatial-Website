@@ -39,6 +39,7 @@ class ServiceController extends Controller
         try {
             $validated = $request->validated();
             $validated['slug'] = Str::slug($validated['title']);
+            $validated['open_in_new_tab'] = $request->has('open_in_new_tab');
 
             $service = Service::create($validated);
 
@@ -73,6 +74,7 @@ class ServiceController extends Controller
         try {
             $validated = $request->validated();
             $validated['slug'] = Str::slug($validated['title']);
+            $validated['open_in_new_tab'] = $request->has('open_in_new_tab');
 
             $service->update($validated);
 

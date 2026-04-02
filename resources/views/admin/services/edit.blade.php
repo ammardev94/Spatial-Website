@@ -66,12 +66,35 @@
                                             id="hero_title" value="{{ old('hero_title', $service->hero_title) }}"
                                             placeholder="Impactful headline for the header">
                                     </div>
-                                    <div class="form-group mb-0">
+                                    <div class="form-group mb-3">
                                         <label class="form-label font-weight-bold" for="hero_description">Hero Banner
                                             Description</label>
                                         <textarea name="hero_description" id="hero_description"
-                                            class="form-control shadow-none" rows="5"
+                                            class="form-control shadow-none" rows="4"
                                             placeholder="Brief summary under the headline">{{ old('hero_description', $service->hero_description) }}</textarea>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label font-weight-bold">Hero Button Text</label>
+                                            <input type="text" name="button_text" class="form-control shadow-none"
+                                                value="{{ old('button_text', $service->button_text) }}"
+                                                placeholder="e.g. Get Started">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label font-weight-bold">Hero Button Link</label>
+                                            <input type="text" name="button_link" class="form-control shadow-none"
+                                                value="{{ old('button_link', $service->button_link) }}"
+                                                placeholder="/contact-us">
+                                        </div>
+                                        <div class="col-md-12 mb-0">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" name="open_in_new_tab"
+                                                    value="1" id="core_open_new_tab" {{ $service->open_in_new_tab ?
+                                                'checked' : '' }}>
+                                                <label class="form-check-label font-weight-bold"
+                                                    for="core_open_new_tab">Open Hero Link in New Tab</label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-5 ps-4 pb-3">
@@ -559,13 +582,15 @@
             });
         });
 
-        $(document).on('click', '.delete-item-btn', function () {
+        $(document).on('click', '.delete-item-btn', function() {
             let id = $(this).data('id');
-            if (confirm('Delete this item?')) {
+            if(confirm('Delete this item?')) {
                 $.ajax({
                     url: "{{ route('admin.services.sections.items.destroy', ':id') }}".replace(':id', id),
                     type: 'DELETE',
-                    success: function () { $(`#item-row-${id}`).fadeOut(); }
+                    success: function() { 
+                        $(`#item-row-${id}`).fadeOut(300, function() { $(this).remove(); }); 
+                    }
                 });
             }
         });
@@ -602,7 +627,9 @@
             $.ajax({
                 url: "{{ route('admin.services.sub_services.items.destroy', ':id') }}".replace(':id', id),
                 type: 'DELETE',
-                success: function () { btn.closest('li').fadeOut(); }
+                success: function () { 
+                    btn.closest('li').fadeOut(300, function() { $(this).remove(); }); 
+                }
             });
         });
 
@@ -611,7 +638,7 @@
             if (confirm('Delete this entire group?')) {
                 $.ajax({
                     url: "{{ route('admin.services.sub_services.destroy', ':id') }}".replace(':id', id),
-                    type: 'DELETE',
+         type: 'DELETE',
                     success: function () { location.reload(); }
                 });
             }

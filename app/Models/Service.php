@@ -14,6 +14,9 @@ class Service extends Model
         'slug',
         'hero_title',
         'hero_description',
+        'button_text',
+        'button_link',
+        'open_in_new_tab',
     ];
 
     /**

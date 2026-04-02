@@ -26,6 +26,9 @@ class ServiceRequest extends FormRequest
             'hero_title' => 'nullable|string|max:255',
             'hero_description' => 'nullable|string',
             'hero_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'button_text' => 'nullable|string|max:100',
+            'button_link' => 'nullable|string|max:500',
+            'open_in_new_tab' => 'boolean',
         ];
     }
 }

@@ -46,7 +46,7 @@
                                 @error('hero_title') <span class="text-danger small">{{ $message }}</span> @enderror
                             </div>
 
-                            <div class="form-group font-weight-bold mb-0">
+                            <div class="form-group font-weight-bold mb-3">
                                 <label class="form-label" for="hero_description">Hero Banner Description
                                     (Optional)</label>
                                 <textarea name="hero_description" id="hero_description" class="form-control shadow-none"
@@ -54,6 +54,27 @@
                                     }}</textarea>
                                 @error('hero_description') <span class="text-danger small">{{ $message }}</span>
                                 @enderror
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label font-weight-bold">Hero Button Text</label>
+                                    <input type="text" name="button_text" class="form-control shadow-none"
+                                        value="{{ old('button_text') }}" placeholder="e.g. Get Started">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label font-weight-bold">Hero Button Link</label>
+                                    <input type="text" name="button_link" class="form-control shadow-none"
+                                        value="{{ old('button_link') }}" placeholder="/contact-us">
+                                </div>
+                                <div class="col-md-12 mb-0">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" name="open_in_new_tab" value="1"
+                                            id="core_open_new_tab" {{ old('open_in_new_tab') ? 'checked' : '' }}>
+                                        <label class="form-check-label font-weight-bold" for="core_open_new_tab">Open
+                                            Hero Link in New Tab</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
