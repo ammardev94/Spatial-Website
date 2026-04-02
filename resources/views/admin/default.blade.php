@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <title>{{ config('app.name') }}</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png') }}">
@@ -39,20 +40,21 @@
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/summernote/summernote-bs4.min.css') }}">
 
     <!-- Toatr CSS -->
-	<link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toatr.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toatr.css') }}">
 
     <!-- Wizard CSS -->
-	<link rel="stylesheet" href="{{ asset('assets/plugins/twitter-bootstrap-wizard/form-wizard.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/twitter-bootstrap-wizard/form-wizard.css') }}">
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    
+
     @yield('css')
 
     <style>
         #toast-container {
             z-index: 1050;
         }
+
         .toast {
             transition: opacity 0.5s ease;
         }
@@ -125,19 +127,19 @@
     <script src="{{ asset('adminlte/plugins/summernote/summernote-bs4.min.js') }}"></script>
 
     <!-- Sweetalert 2 -->
-	<script src="{{ asset('assets/plugins/sweetalert/sweetalert2.all.min.js') }}"></script>
-	<script src="{{ asset('assets/plugins/sweetalert/sweetalerts.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/sweetalert/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/sweetalert/sweetalerts.min.js') }}"></script>
 
     <!-- Toastr JS -->
     <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
 
-	<!-- Wizard JS -->
-	<script src="{{ asset('assets/plugins/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js') }}"></script>
-	<script src="{{ asset('assets/plugins/twitter-bootstrap-wizard/prettify.js') }}"></script>
-	<script src="{{ asset('assets/plugins/twitter-bootstrap-wizard/form-wizard.js') }}"></script>
+    <!-- Wizard JS -->
+    <script src="{{ asset('assets/plugins/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/twitter-bootstrap-wizard/prettify.js') }}"></script>
+    <script src="{{ asset('assets/plugins/twitter-bootstrap-wizard/form-wizard.js') }}"></script>
 
     <!-- Fileupload JS -->
-	<script src="{{ asset('assets/plugins/fileupload/fileupload.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/fileupload/fileupload.min.js') }}"></script>
 
     <!-- Custom JS -->
     <script src="{{ asset('assets/js/script.js') }}"></script>
@@ -146,6 +148,12 @@
 
     <script>
         $(document).ready(function () {
+
+
+            $.ajaxSetup({
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+            });
+
 
             const solidSuccessToast = $('#solid-successToast');
             if (solidSuccessToast.length) {
@@ -171,7 +179,7 @@
 
     <script>
 
-        function closeNotification () {
+        function closeNotification() {
             window.location = window.location.href
         }
 
@@ -180,6 +188,7 @@
         }
     </script>
 
+    @yield('modal')
 </body>
 
 </html>

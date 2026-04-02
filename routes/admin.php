@@ -11,6 +11,9 @@ use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\InsightController;
 use App\Http\Controllers\Admin\MaterialFinishesController;
 use App\Http\Controllers\Admin\GeneralInformationController;
+use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\ServiceSectionController;
+use App\Http\Controllers\Admin\ServiceSubServiceController;
 use App\Http\Controllers\Admin\NotificationController;
 
 Route::group(['prefix' => 'admin'], function () {
@@ -84,6 +87,28 @@ Route::group(['prefix' => 'admin'], function () {
 
                 Route::get('/settings/general', [GeneralInformationController::class , 'edit'])->name('admin.settings.general.edit');
                 Route::put('/settings/general/update', [GeneralInformationController::class , 'update'])->name('admin.settings.general.update');
+
+
+                Route::get('/services', [ServiceController::class , 'index'])->name('admin.services.index');
+                Route::get('/services/create', [ServiceController::class , 'create'])->name('admin.services.create');
+                Route::post('/services/store', [ServiceController::class , 'store'])->name('admin.services.store');
+                Route::get('/services/{service}/edit', [ServiceController::class , 'edit'])->name('admin.services.edit');
+                Route::put('/services/{service}/update', [ServiceController::class , 'update'])->name('admin.services.update');
+                Route::delete('/services/{service}/delete', [ServiceController::class , 'destroy'])->name('admin.services.destroy');
+
+                // AJAX Sections
+                Route::get('/services/sections/{section}/items', [ServiceSectionController::class , 'getItems'])->name('admin.services.sections.items.index');
+                Route::post('/services/sections/store', [ServiceSectionController::class , 'store'])->name('admin.services.sections.store');
+                Route::put('/services/sections/{section}/update', [ServiceSectionController::class , 'update'])->name('admin.services.sections.update');
+                Route::delete('/services/sections/{section}/delete', [ServiceSectionController::class , 'destroy'])->name('admin.services.sections.destroy');
+                Route::post('/services/sections/items/store', [ServiceSectionController::class , 'storeItem'])->name('admin.services.sections.items.store');
+                Route::delete('/services/sections/items/{item}/delete', [ServiceSectionController::class , 'deleteItem'])->name('admin.services.sections.items.destroy');
+
+                // AJAX Sub-services
+                Route::post('/services/sub-services/store', [ServiceSubServiceController::class , 'store'])->name('admin.services.sub_services.store');
+                Route::delete('/services/sub-services/{subService}/delete', [ServiceSubServiceController::class , 'destroy'])->name('admin.services.sub_services.destroy');
+                Route::post('/services/sub-services/items/store', [ServiceSubServiceController::class , 'storeItem'])->name('admin.services.sub_services.items.store');
+                Route::delete('/services/sub-services/items/{item}/delete', [ServiceSubServiceController::class , 'destroyItem'])->name('admin.services.sub_services.items.destroy');
 
             }
             );

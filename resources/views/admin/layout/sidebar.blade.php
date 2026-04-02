@@ -41,6 +41,12 @@
                                 <span>SEO & CMS</span>
                             </a>
                         </li>
+                        <li class="{{ request()->is('admin/services*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.services.index') }}">
+                                <i class="ti ti-layout-2"></i>
+                                <span>Services</span>
+                            </a>
+                        </li>
                         <li class="{{ request()->is('admin/projects*') ? 'active' : '' }}">
                             <a href="{{ route('admin.projects.index') }}">
                                 <i class="ti ti-briefcase"></i>
