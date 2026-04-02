@@ -459,11 +459,13 @@
             }
         });
 
-        $("#editServiceForm").validate({
-            rules: {
-                title: { required: true, minlength: 2 }
-            }
-        });
+        if ($("#editServiceForm").length) {
+            $("#editServiceForm").validate({
+                rules: {
+                    title: { required: true, minlength: 2 }
+                }
+            });
+        }
 
         // --- Sections Logic ---
         $(document).on('click', '.create-section-btn', function () {
@@ -508,13 +510,22 @@
 
         $(document).on('click', '.delete-section-btn', function () {
             let id = $(this).data('id');
-            if (confirm('Delete this section and all its items?')) {
-                $.ajax({
-                    url: "{{ route('admin.services.sections.destroy', ':id') }}".replace(':id', id),
-                    type: 'DELETE',
-                    success: function () { location.reload(); }
-                });
-            }
+            Swal.fire({
+                title: 'Delete Section?',
+                text: "This will permanently remove the section and all its nested items.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ route('admin.services.sections.destroy', ':id') }}".replace(':id', id),
+                        type: 'DELETE',
+                        success: function () { location.reload(); }
+                    });
+                }
+            });
         });
 
         // --- Manage Items Logic ---
@@ -582,17 +593,26 @@
             });
         });
 
-        $(document).on('click', '.delete-item-btn', function() {
+        $(document).on('click', '.delete-item-btn', function () {
             let id = $(this).data('id');
-            if(confirm('Delete this item?')) {
-                $.ajax({
-                    url: "{{ route('admin.services.sections.items.destroy', ':id') }}".replace(':id', id),
-                    type: 'DELETE',
-                    success: function() { 
-                        $(`#item-row-${id}`).fadeOut(300, function() { $(this).remove(); }); 
-                    }
-                });
-            }
+            Swal.fire({
+                title: 'Remove Item?',
+                text: "Are you sure you want to delete this specific section item?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Yes, remove'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ route('admin.services.sections.items.destroy', ':id') }}".replace(':id', id),
+                        type: 'DELETE',
+                        success: function () {
+                            $(`#item-row-${id}`).fadeOut(300, function () { $(this).remove(); });
+                        }
+                    });
+                }
+            });
         });
 
         // --- Sub-services Logic ---
@@ -615,8 +635,7 @@
                         <li class="list-group-item d-flex justify-content-between border-0 px-0 py-1">
                             <span>${res.item.title}</span>
                             <a href="javascript:void(0);" class="text-danger opacity-50 delete-sub-item" data-id="${res.item.id}"><i class="fas fa-times"></i></a>
-                        </li>
-                    `);
+                                       `);
                 }
             });
         });
@@ -624,24 +643,44 @@
         $(document).on('click', '.delete-sub-item', function () {
             let btn = $(this);
             let id = btn.data('id');
-            $.ajax({
-                url: "{{ route('admin.services.sub_services.items.destroy', ':id') }}".replace(':id', id),
-                type: 'DELETE',
-                success: function () { 
-                    btn.closest('li').fadeOut(300, function() { $(this).remove(); }); 
+            Swal.fire({
+                title: 'Delete Item?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ route('admin.services.sub_services.items.destroy', ':id') }}".replace(':id', id),
+                        type: 'DELETE',
+                        success: function () { 
+                            btn.closest('li').fadeOut(300, function() { $(this).remove(); }); 
+                        }
+                    });
                 }
             });
         });
 
         $(document).on('click', '.delete-group-btn', function () {
             let id = $(this).data('id');
-            if (confirm('Delete this entire group?')) {
-                $.ajax({
-                    url: "{{ route('admin.services.sub_services.destroy', ':id') }}".replace(':id', id),
-         type: 'DELETE',
-                    success: function () { location.reload(); }
-                });
-            }
+            Swal.fire({
+                title: 'Delete entire group?',
+                text: "All items within this group will also be removed.",
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete everything'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ route('admin.services.sub_services.destroy', ':id') }}".replace(':id', id),
+                        type: 'DELETE',
+                        success: function () { location.reload(); }
+                    });
+                }
+            });
         });
     });
 </script>
