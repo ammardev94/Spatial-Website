@@ -24,9 +24,9 @@
         <div class="card card-primary">
             <div class="card-header border-bottom-0 pt-4">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h3 class="card-title fw-bold mb-0">Services List</h3>
+                    <h3 class="card-title fw-bold mb-0">Services</h3>
                     <a class="btn btn-primary shadow-none" href="{{ route('admin.services.create') }}">
-                        <i class="fas fa-plus me-1"></i> Add Service
+                        <i class="fas fa-plus me-1"></i>
                     </a>
                 </div>
             </div>
