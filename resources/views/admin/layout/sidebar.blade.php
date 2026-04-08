@@ -71,6 +71,12 @@
                                 <span>Contact Requests</span>
                             </a>
                         </li>
+                        <li class="{{ request()->is('admin/roi*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.roi.index') }}">
+                                <i class="ti ti-calculator"></i>
+                                <span>ROI Requests</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li>
