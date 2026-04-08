@@ -19,3 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/contacts', [\App\Http\Controllers\Api\ContactController::class , 'store']);
+Route::post('/roi-requests', [\App\Http\Controllers\Api\RoiController::class , 'store']);
