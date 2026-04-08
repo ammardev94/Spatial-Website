@@ -90,7 +90,7 @@
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-outline-danger w-100 py-2 shadow-none delete-btn">
-                <i class="fas fa-trash me-1"></i> Delete This Record
+                <i class="fas fa-trash me-1"></i> PERMANENTLY DELETE RECORD
             </button>
         </form>
     </div>
