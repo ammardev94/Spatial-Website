@@ -110,6 +110,11 @@ Route::group(['prefix' => 'admin'], function () {
                 Route::post('/services/sub-services/items/store', [ServiceSubServiceController::class , 'storeItem'])->name('admin.services.sub_services.items.store');
                 Route::delete('/services/sub-services/items/{item}/delete', [ServiceSubServiceController::class , 'destroyItem'])->name('admin.services.sub_services.items.destroy');
 
+                // Contact Requests
+                Route::get('/contacts', [\App\Http\Controllers\Admin\ContactController::class , 'index'])->name('admin.contacts.index');
+                Route::get('/contacts/{contact}', [\App\Http\Controllers\Admin\ContactController::class , 'show'])->name('admin.contacts.show');
+                Route::delete('/contacts/{contact}', [\App\Http\Controllers\Admin\ContactController::class , 'destroy'])->name('admin.contacts.destroy');
+
             }
             );
         });

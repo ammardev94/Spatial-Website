@@ -65,6 +65,12 @@
                                 <span>Material & Finishes</span>
                             </a>
                         </li>
+                        <li class="{{ request()->is('admin/contacts*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.contacts.index') }}">
+                                <i class="ti ti-messages"></i>
+                                <span>Contact Requests</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li>
