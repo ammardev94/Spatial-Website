@@ -11,8 +11,13 @@
     }
 
     .active-view {
-        background-color: #f3f4f9 !important;
-        border: 1px solid #ddd !important;
+        background-color: #313131 !important;
+        color: #ffffff !important;
+        border: 1px solid #313131 !important;
+    }
+
+    .active-view i {
+        color: #ffffff !important;
     }
 
     .gallery-card-main {

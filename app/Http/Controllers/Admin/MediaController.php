@@ -15,7 +15,7 @@ class MediaController extends Controller
      */
     public function index()
     {
-        $images = Image::with('imageable')->orderBy('created_at', 'desc')->paginate(20);
+        $images = Image::with('imageable')->orderBy('created_at', 'desc')->paginate(12);
         return view('admin.media.index', compact('images'));
     }
 
@@ -27,7 +27,6 @@ class MediaController extends Controller
         try {
             $image = Image::findOrFail($id);
 
-            // Delete from storage
             if (Storage::disk('public')->exists($image->url)) {
                 Storage::disk('public')->delete($image->url);
             }
