@@ -23,4 +23,12 @@ class MaterialNFinish extends Model
     {
         return $this->morphOne(Image::class , 'imageable')->where('tag', 'feature');
     }
+
+    /**
+     * Get the material's gallery images.
+     */
+    public function gallery()
+    {
+        return $this->morphMany(Image::class , 'imageable')->where('tag', 'gallery');
+    }
 }

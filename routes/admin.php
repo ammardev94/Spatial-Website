@@ -83,6 +83,7 @@ Route::group(['prefix' => 'admin'], function () {
                 Route::get('/material-finishes/{materialFinish}/edit', [MaterialFinishesController::class , 'edit'])->name('admin.material_finishes.edit');
                 Route::put('/material-finishes/{materialFinish}/update', [MaterialFinishesController::class , 'update'])->name('admin.material_finishes.update');
                 Route::delete('/material-finishes/{materialFinish}/delete', [MaterialFinishesController::class , 'destroy'])->name('admin.material_finishes.destroy');
+                Route::delete('/material-finishes/gallery-image/{id}', [MaterialFinishesController::class , 'deleteGalleryImage'])->name('admin.material_finishes.gallery.destroy');
 
 
                 Route::get('/settings/general', [GeneralInformationController::class , 'edit'])->name('admin.settings.general.edit');

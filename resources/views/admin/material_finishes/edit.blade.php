@@ -68,6 +68,30 @@
                                 @error('feature_img') <span class="text-danger small">{{ $message }}</span> @enderror
                             </div>
                         </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group font-weight-bold">
+                                <label for="gallery">Gallery Images (Optional)</label>
+                                <div class="row g-2 mb-3 mt-1" id="gallery_images_container">
+                                    @foreach($materialFinish->gallery as $image)
+                                    <div class="col-4 col-md-3 gallery-item-wrapper" id="gallery-img-{{ $image->id }}">
+                                        <div class="position-relative border rounded p-1">
+                                            <img src="{{ asset('storage/'.$image->url) }}"
+                                                class="img-fluid rounded shadow-sm">
+                                            <button type="button"
+                                                class="btn btn-danger btn-xs position-absolute top-0 start-100 translate-middle rounded-circle delete-gallery-img"
+                                                data-id="{{ $image->id }}" title="Delete image">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
+                                <input type="file" class="form-control shadow-none" name="gallery[]" id="gallery"
+                                    multiple>
+                                <small class="text-muted">Select more images to add to the gallery.</small>
+                                @error('gallery.*') <span class="text-danger small">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer text-start">
@@ -102,6 +126,32 @@
 
         $('#feature_img').change(function () {
             readURL(this, 'feature_img_preview');
+        });
+
+        $(document).on('click', '.delete-gallery-img', function () {
+            let id = $(this).data('id');
+            let btn = $(this);
+
+            Swal.fire({
+                title: 'Delete Image?',
+                text: "Are you sure you want to remove this image from the gallery?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ route('admin.material_finishes.gallery.destroy', ':id') }}".replace(':id', id),
+                        type: 'DELETE',
+                        success: function (res) {
+                            if (res.success) {
+                                $(`#gallery-img-${id}`).fadeOut(300, function () { $(this).remove(); });
+                            }
+                        }
+                    });
+                }
+            });
         });
 
         $("#editMaterialForm").validate({

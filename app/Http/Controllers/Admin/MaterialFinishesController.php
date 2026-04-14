@@ -44,6 +44,13 @@ class MaterialFinishesController extends Controller
                 $materialFinish->feature_img()->create(['url' => $path, 'tag' => 'feature']);
             }
 
+            if ($request->hasFile('gallery')) {
+                foreach ($request->file('gallery') as $file) {
+                    $path = $file->store('material_finishes/gallery', 'public');
+                    $materialFinish->gallery()->create(['url' => $path, 'tag' => 'gallery']);
+                }
+            }
+
             Session::flash('msg.success', 'Material & Finish created successfully.');
             return redirect()->route('admin.material_finishes.index');
         }
@@ -79,6 +86,13 @@ class MaterialFinishesController extends Controller
                 $materialFinish->feature_img()->create(['url' => $path, 'tag' => 'feature']);
             }
 
+            if ($request->hasFile('gallery')) {
+                foreach ($request->file('gallery') as $file) {
+                    $path = $file->store('material_finishes/gallery', 'public');
+                    $materialFinish->gallery()->create(['url' => $path, 'tag' => 'gallery']);
+                }
+            }
+
             Session::flash('msg.success', 'Material & Finish updated successfully.');
             return redirect()->route('admin.material_finishes.index');
         }
@@ -99,6 +113,11 @@ class MaterialFinishesController extends Controller
                 $materialFinish->feature_img->delete();
             }
 
+            foreach ($materialFinish->gallery as $image) {
+                Storage::disk('public')->delete($image->url);
+                $image->delete();
+            }
+
             $materialFinish->delete();
 
             Session::flash('msg.success', 'Material & Finish deleted successfully.');
@@ -107,6 +126,23 @@ class MaterialFinishesController extends Controller
         catch (Exception $e) {
             Session::flash('msg.error', 'Error: ' . $e->getMessage());
             return redirect()->back();
+        }
+    }
+
+    /**
+     * Delete a single gallery image.
+     */
+    public function deleteGalleryImage($id)
+    {
+        try {
+            $image = Image::findOrFail($id);
+            Storage::disk('public')->delete($image->url);
+            $image->delete();
+
+            return response()->json(['success' => true, 'message' => 'Gallery image deleted successfully.']);
+        }
+        catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error: ' . $e->getMessage()], 500);
         }
     }
 }

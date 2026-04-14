@@ -57,6 +57,15 @@
                                 @error('feature_img') <span class="text-danger small">{{ $message }}</span> @enderror
                             </div>
                         </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group font-weight-bold">
+                                <label for="gallery">Gallery Images (Optional)</label>
+                                <input type="file" class="form-control shadow-none" name="gallery[]" id="gallery"
+                                    multiple>
+                                <small class="text-muted">You can select multiple images.</small>
+                                @error('gallery.*') <span class="text-danger small">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer text-start">
