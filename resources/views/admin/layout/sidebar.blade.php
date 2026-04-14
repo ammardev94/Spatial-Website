@@ -35,6 +35,12 @@
                 <li>
                     <h6 class="submenu-hdr"><span>MENU</span></h6>
                     <ul>
+                        <li class="{{ request()->is('admin/media*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.media.index') }}">
+                                <i class="ti ti-photo"></i>
+                                <span>Media Library</span>
+                            </a>
+                        </li>
                         <li class="{{ request()->is('admin/cms/pages*') ? 'active' : '' }}">
                             <a href="{{ route('cms.page.index') }}">
                                 <i class="ti ti-page-break"></i>

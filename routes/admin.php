@@ -116,6 +116,10 @@ Route::group(['prefix' => 'admin'], function () {
                 Route::get('/contacts/{contact}', [\App\Http\Controllers\Admin\ContactController::class , 'show'])->name('admin.contacts.show');
                 Route::delete('/contacts/{contact}', [\App\Http\Controllers\Admin\ContactController::class , 'destroy'])->name('admin.contacts.destroy');
 
+                // Media Library
+                Route::get('/media', [\App\Http\Controllers\Admin\MediaController::class , 'index'])->name('admin.media.index');
+                Route::delete('/media/{id}', [\App\Http\Controllers\Admin\MediaController::class , 'destroy'])->name('admin.media.destroy');
+
                 // ROI Requests
                 Route::get('/roi-requests', [\App\Http\Controllers\Admin\RoiController::class , 'index'])->name('admin.roi.index');
                 Route::get('/roi-requests/{roi}', [\App\Http\Controllers\Admin\RoiController::class , 'show'])->name('admin.roi.show');
