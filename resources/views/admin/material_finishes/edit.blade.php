@@ -1,5 +1,48 @@
 @extends('admin.default')
 
+@section('css')
+<style>
+    .gallery-item-wrapper .gallery-card {
+        transition: all 0.3s ease;
+        border: 1px solid #eee;
+        overflow: hidden;
+    }
+
+    .gallery-item-wrapper .gallery-card:hover {
+        border-color: #6a49e3;
+        box-shadow: 0 4px 12px rgba(106, 73, 227, 0.1);
+    }
+
+    .gallery-item-wrapper .delete-gallery-img {
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.2s ease;
+        background: rgba(220, 53, 69, 0.9);
+        border: none;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        top: 5px !important;
+        right: 5px !important;
+        transform: translate(0, 0) !important;
+    }
+
+    .gallery-item-wrapper:hover .delete-gallery-img {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .gallery-item-wrapper img {
+        height: 80px;
+        width: 100%;
+        object-fit: cover;
+    }
+</style>
+@endsection
+
 @section('content')
 <!-- Page Header -->
 <div class="d-md-flex d-block align-items-center justify-content-between mb-3">
@@ -74,13 +117,12 @@
                                 <div class="row g-2 mb-3 mt-1" id="gallery_images_container">
                                     @foreach($materialFinish->gallery as $image)
                                     <div class="col-4 col-md-3 gallery-item-wrapper" id="gallery-img-{{ $image->id }}">
-                                        <div class="position-relative border rounded p-1">
-                                            <img src="{{ asset('storage/'.$image->url) }}"
-                                                class="img-fluid rounded shadow-sm">
+                                        <div class="position-relative gallery-card rounded">
+                                            <img src="{{ asset('storage/'.$image->url) }}" class="img-fluid rounded">
                                             <button type="button"
-                                                class="btn btn-danger btn-xs position-absolute top-0 start-100 translate-middle rounded-circle delete-gallery-img"
+                                                class="btn btn-danger btn-xs position-absolute rounded-circle delete-gallery-img"
                                                 data-id="{{ $image->id }}" title="Delete image">
-                                                <i class="fas fa-times"></i>
+                                                <i class="fas fa-trash-alt" style="font-size: 10px;"></i>
                                             </button>
                                         </div>
                                     </div>
