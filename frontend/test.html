@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Scroll Ship + Reveal Panel</title>
+
+  <!-- GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+  <style>
+    :root{
+      --bgLight:#EEF1F4;
+      --ink:#0B1320;
+      --green:#1FD36A;
+      --white:#fff;
+      --pad:clamp(18px,3vw,44px);
+      --radius:22px;
+      --hair:rgba(255,255,255,.16);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background:#000;
+      color:var(--ink);
+    }
+
+    /* Give room to scroll (pinned section uses this space) */
+    .spacer{height:60vh;background:#0b0f14}
+
+    /* ===== Pinned Intro Section ===== */
+    .introWrap{
+      position:relative;
+      height:260vh; /* scroll distance; adjust to match your video speed */
+      background:#0b0f14;
+    }
+
+    .introPin{
+      position:relative;
+      height:100vh;
+      overflow:hidden;
+      background:var(--bgLight);
+      isolation:isolate;
+    }
+
+    /* Base background */
+    .bgBase{
+      position:absolute;
+      inset:0;
+      background: var(--bgLight);
+      z-index:0;
+    }
+
+    /* Parallax layer (texture/water/map) */
+    .parallaxLayer{
+      position:absolute;
+      inset:-8% -10%;
+      z-index:1;
+      background-size:cover;
+      background-position:center;
+      opacity:0.9;
+      will-change:transform;
+      pointer-events:none;
+      mix-blend-mode:multiply; /* optional; remove if not desired */
+    }
+
+    /* Ship (transparent PNG/WebP) */
+    .ship{
+      position:absolute;
+      right: 20%;
+      top: 52%;
+      transform: translateY(-50%);
+      width:min(900px, 60vw);
+      height:auto;
+      z-index:2;
+      opacity:1;
+      will-change:transform;
+      pointer-events:none;
+      filter: drop-shadow(0 18px 40px rgba(0,0,0,.22));
+    }
+
+    /* Top centered heading */
+    .topText{
+      position:relative;
+      z-index:3;
+      padding:var(--pad);
+      display:flex;
+      justify-content:center;
+      text-align:center;
+      padding-top: clamp(18px, 3.2vh, 34px);
+      user-select:none;
+    }
+    .kicker{
+      display:inline-block;
+      font-size:10px;
+      letter-spacing:.18em;
+      font-weight:800;
+      color:var(--green);
+      margin-bottom:8px;
+      text-transform:uppercase;
+    }
+    .title{
+      margin:0;
+      font-size: clamp(22px, 2.2vw, 34px);
+      line-height:1.1;
+      letter-spacing:-.01em;
+      text-transform:uppercase;
+      font-weight:900;
+      white-space:pre-line;
+    }
+
+    /* Right panel that appears after ship move */
+    .rightPanel{
+      position:absolute;
+      top: 50%;
+      right: var(--pad);
+      transform: translateY(-50%);
+      width: min(520px, 44vw);
+      z-index:4;
+
+      opacity:0;
+      translate: 60px 0; /* initial hidden position */
+      will-change:transform, opacity;
+    }
+
+    .card{
+      border-radius: var(--radius);
+      border: 1px solid rgba(11,19,32,.10);
+      background: rgba(255,255,255,.75);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 60px rgba(0,0,0,.12);
+      padding: clamp(18px, 2vw, 26px);
+    }
+
+    .card h3{
+      margin:0 0 10px;
+      font-size: clamp(16px, 1.3vw, 20px);
+      letter-spacing:-.01em;
+      text-transform:uppercase;
+    }
+
+    .card p{
+      margin:0;
+      color: rgba(11,19,32,.72);
+      line-height:1.45;
+      font-size: clamp(12px, 1.05vw, 14px);
+    }
+
+    /* Optional: bottom strip, like the video */
+    .bottomStrip{
+      position:absolute;
+      left:0; right:0; bottom:0;
+      padding: calc(var(--pad) * 0.8) var(--pad);
+      z-index:3;
+      background: linear-gradient(to top, rgba(0,0,0,.10), transparent);
+      display:flex;
+      justify-content:space-between;
+      gap:24px;
+      pointer-events:none;
+    }
+    .bottomLeft{
+      font-weight:900;
+      text-transform:uppercase;
+      white-space:pre-line;
+      font-size: clamp(14px, 1.3vw, 18px);
+    }
+    .bottomRight{
+      max-width: 520px;
+      font-size: clamp(11px, 1vw, 13px);
+      line-height:1.35;
+      color: rgba(11,19,32,.72);
+    }
+
+    /* Next content section */
+    .nextSection{
+      min-height: 120vh;
+      background:#0b0f14;
+      color:#fff;
+      padding: 10vh var(--pad);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="spacer"></div>
+
+  <section class="introWrap">
+    <div class="introPin" id="introPin">
+      <div class="bgBase"></div>
+
+      <!-- Replace with your images -->
+      <div class="parallaxLayer" id="parallaxLayer"
+           style="background-image:url('YOUR_PARALLAX_IMAGE.jpg');"></div>
+
+      <img class="ship" id="ship" src="images/fixed-ship-img.png" alt="" />
+
+      <div class="topText">
+        <div>
+          <div class="kicker">WHY CHOOSE US</div>
+          <h1 class="title">WHY CHOOSE PREMIER\nMARINE ENGINEERING</h1>
+        </div>
+      </div>
+
+      <!-- Right panel appears AFTER ship motion finishes -->
+      <div class="rightPanel" id="rightPanel">
+        <div class="card">
+          <h3>Regulatory & Class Compliance</h3>
+          <p>
+            Replace this copy. This panel is revealed only after the ship/parallax scroll animation completes.
+          </p>
+        </div>
+      </div>
+
+      <div class="bottomStrip">
+        <div class="bottomLeft">REGULATORY & CLASS\nCOMPLIANCE EXPERTISE</div>
+        <div class="bottomRight">
+          Adherence to strict industry standards and regulatory frameworks ensures safe and compliant operations.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="nextSection">
+    <h2 style="margin:0 0 12px; font-size:28px;">Next Section</h2>
+    <p style="margin:0; max-width:70ch; color:rgba(255,255,255,.75); line-height:1.6;">
+      This is where the rest of the page continues after the pinned intro finishes.
+    </p>
+  </section>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  const ship = document.getElementById("ship");
+  const parallaxLayer = document.getElementById("parallaxLayer");
+  const rightPanel = document.getElementById("rightPanel");
+
+  // Start states (ship/parallax begin off to the right)
+  gsap.set(parallaxLayer, { xPercent: 14, scale: 1.06 });
+  gsap.set(ship, { x: 3000});               // ship starts to the right
+  gsap.set(rightPanel, { opacity: 0, x: 60 });
+
+  // Pinned scroll timeline
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".introWrap",
+      start: "top top",
+      end: "+=1800",        // controls how long the pinned animation lasts (tune)
+      pin: "#introPin",
+      scrub: true,
+      anticipatePin: 1
+      // markers: true,     // uncomment to debug
+    }
+  });
+
+  // 1) Ship + parallax move together (parallax slower for depth)
+  tl.to(parallaxLayer, { xPercent: 0, scale: 1.02, ease: "none" }, 0);
+  tl.to(ship, { x: -220, ease: "none" }, 0); // ship ends more left; tune to match
+
+  // Optional: tiny “settle” toward the end (still scrubbed)
+  tl.to(ship, { x: -260, ease: "none" }, 0.55);
+
+  // 2) Only AFTER ship finishes: reveal the right panel
+  // Place the reveal in the last part of the timeline
+  tl.to(rightPanel, { opacity: 1, x: 0, ease: "none" }, 0.78);
+
+  // Optional: fade ship slightly as panel appears (if video does that)
+  // tl.to(ship, { opacity: 0.95, ease: "none" }, 0.78);
+</script>
+
+</body>
+</html>
