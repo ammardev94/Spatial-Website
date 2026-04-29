@@ -16653,7 +16653,7 @@ h6,
   padding: 140px 0;
 }
 .sec-padding.\--small {
-  padding: 40px 0;
+  padding: 75px 0;
 }
 .sec-padding.\--xsmall {
   padding: 40px 0;
@@ -19405,6 +19405,9 @@ p {
   top: 0;
   width: 100%;
 }
+.animate-sec .left-img-with-content .imgbox img {
+  position: relative;
+}
 .animate-sec .mainslidesec {
   position: absolute;
   width: 100%;
@@ -19581,7 +19584,7 @@ p {
   justify-content: center;
   font-weight: bold;
   opacity: 0;
-  row-gap: 70px;
+  row-gap: 50px;
 }
 .card .grid-b {
   display: grid;
@@ -19664,6 +19667,13 @@ p {
   color: #ffffff;
 }
 
+.portfolio-grid-with-btn .card .project-box .norm-box .proj-img img {
+  height: 325px !important;
+}
+.portfolio-grid-with-btn .card .project-box .hover-box .hover-img {
+  aspect-ratio: 1/1.045;
+}
+
 .bannerimg {
   padding: 180px 0 50px;
 }
@@ -19722,6 +19732,113 @@ p {
 }
 .related-portfolio .card .item {
   border-color: rgba(255, 255, 255, 0.4);
+}
+.related-portfolio.related-insights .card .project-box .hover-box .hover-img {
+  aspect-ratio: 1/1.04;
+}
+
+.insight-content .content-box .insight-list ul li {
+  position: relative;
+  padding-left: 20px;
+}
+.insight-content .content-box .insight-list ul li::before {
+  content: attr(data-number) ".";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: bold;
+}
+.insight-content .subscribe-box {
+  border: 1px solid rgba(30, 30, 30, 0.5);
+  padding: 40px;
+  margin-left: 80px;
+  position: sticky;
+  top: 130px;
+}
+.insight-content .subscribe-box h2 {
+  font-size: 30px;
+}
+
+.social-share ul li a {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border: 1px solid rgba(0, 0, 0, 0.45);
+  border-radius: 50%;
+  font-size: 16px;
+  color: #000000;
+  transition: 0.3s ease all;
+}
+.social-share ul li a:hover {
+  color: #ffffff !important;
+  background-color: #000000;
+}
+
+form.updated-form .input-wrapper input,
+form.updated-form .input-wrapper select,
+form.updated-form .input-wrapper textarea {
+  background: transparent;
+  border: 1px solid rgba(30, 30, 30, 0.3);
+  padding: 17px 20px;
+  outline: none;
+  text-transform: uppercase;
+  font-size: var(--font-size-14);
+}
+form.updated-form .input-btn {
+  margin-top: 15px;
+}
+
+.contact-main .contact-content ul {
+  margin-top: 35px;
+}
+.contact-main .contact-content ul li a {
+  color: var(--theme-font-color);
+  position: relative;
+}
+.contact-main .contact-content ul li a:before {
+  content: "";
+  position: absolute;
+  right: -5px;
+  top: 3px;
+  height: 22px;
+  width: 1px;
+  background-color: var(--theme-font-color);
+}
+.contact-main .contact-content ul li a:last-child:before {
+  display: none;
+}
+.contact-main .contact-content .social-share {
+  margin-top: 35px;
+}
+.contact-main .contact-box {
+  border: 1px solid rgba(30, 30, 30, 0.5);
+  padding: 32px 38px;
+  margin-left: 60px;
+}
+.contact-main .contact-box form .row {
+  margin-left: -10px;
+}
+.contact-main .contact-box form .input-wrapper {
+  margin-left: 10px;
+}
+.contact-main .contact-box form .input-wrapper select {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  position: relative;
+  cursor: pointer;
+}
+.contact-main .contact-box form .input-wrapper img {
+  position: absolute;
+  right: 20px;
+  top: 70%;
+  transform: translate(0, -50%);
+}
+.contact-main .contact-box form .input-wrapper textarea {
+  height: 57px;
 }
 
 @media (max-width: 1600px) {

@@ -16,7 +16,7 @@ $(function () {
                 scrollTrigger: {
                     trigger: "#homepage #multi-animation",
                     start: "top top",
-                    end: "+=120%",
+                    end: "+=250%",
                     scrub: true,
                     pin: true,
                     // markers: true,
@@ -27,38 +27,38 @@ $(function () {
             // Animation 1
             multianimationTL
                 .fromTo(
-                    "#homepage img#leftimgbox",
-                    { x: -1000 },
-                    { x: 0, ease: "none", duration: 2 }, // duration seconds mein
+                    "#homepage  img#leftimgbox",
+                    { left: "-100%" },
+                    { left: 0, ease: "none", duration: 4 }, // duration seconds mein
                 )
                 .fromTo(
                     "#homepage #leftimgcontent",
                     { x: 1200 },
-                    { x: 0, ease: "none", duration: 2 },
+                    { x: 0, ease: "none", duration: 4, },
                     "<",
                 )
                 .fromTo(
                     "#homepage .left-img-with-content",
                     { x: 0 },
-                    { x: "100%", ease: "none", opacity: 0, duration: 1.5 },
-                    "+=0.2",
+                    { x: "100%", ease: "none", opacity: 0, duration: 5 },
+                    "+=0.5",
                 )
                 .fromTo(
                     "#homepage .transform",
                     { x: "-100%" },
-                    { x: 0, ease: "none", duration: 1.5 },
+                    { x: 0, ease: "none", duration: 4 },
                     "<",
                 )
                 .fromTo(
                     "#homepage .slide-sec-1",
                     { x: 2200 },
-                    { x: 0, ease: "none", duration: 2 },
+                    { x: 0, ease: "none", duration: 4 },
                     "+=0.3"
                 )
                 .fromTo(
                     "#homepage .slide-sec-2",
                     { x: 2200 },
-                    { x: 0, ease: "none", duration: 2 },
+                    { x: 0, ease: "none", duration: 4 },
                     "+=0.3"
                 );
 
@@ -66,7 +66,7 @@ $(function () {
                 scrollTrigger: {
                     trigger: "#homepage .right-img-with-content",
                     start: "top top",
-                    end: "+=40%",
+                    end: "+=100%",
                     scrub: true,
                     pin: true,
                     // markers: true,
@@ -78,12 +78,12 @@ $(function () {
                 .fromTo(
                     "#homepage #right-img-content",
                     { x: -1100 },
-                    { x: 0, ease: "none", },
+                    { x: 0, ease: "none", duration: 4 },
                 )
                 .fromTo(
                     "#homepage #right-img",
                     { x: 1200 },
-                    { x: 0, ease: "none", },
+                    { x: 0, ease: "none", duration: 4 },
                     "<",
                 );
 
@@ -92,7 +92,7 @@ $(function () {
                 scrollTrigger: {
                     trigger: "#homepage .responsible",
                     start: "top top",
-                    end: "+=40%",
+                    end: "+=100%",
                     scrub: true,
                     pin: true,
                     // markers: true,
@@ -104,18 +104,18 @@ $(function () {
                 .fromTo(
                     "#homepage #response-left",
                     { x: 1000 },
-                    { x: 0, ease: "none", duration: 1.5 },
+                    { x: 0, ease: "none", duration: 4 },
                 )
                 .fromTo(
                     "#homepage #response-content",
                     { y: 1000 },
-                    { y: 0, ease: "none", duration: 1.5 },
+                    { y: 0, ease: "none", duration: 4 },
                     "<",
                 )
                 .fromTo(
                     "#homepage #response-right",
                     { x: -1000 },
-                    { x: 0, ease: "none", duration: 1.5 },
+                    { x: 0, ease: "none", duration: 4 },
                     "<",
                 );
 
@@ -304,6 +304,46 @@ $(function () {
     });
 
 
+    // Aesthetic Treatment Slider
+    const propertySlider = new Swiper(".property-slider", {
+        loop: true,
+        slidesPerView: 4,
+        spaceBetween: 0,
+        speed: 800,
+        allowTouchMove: true,
+
+        // navigation: {
+        //     nextEl: ".facilities-dots-n-arrow .cs-swiper-button-next",
+        //     prevEl: ".facilities-dots-n-arrow .cs-swiper-button-prev",
+        // },
+
+
+        breakpoints: {
+
+            0: {
+                slidesPerView: 1,
+                spaceBetween: 0,
+            },
+
+            768: {
+                slidesPerView: 2,
+                spaceBetween: 0,
+            },
+            1081: {
+                slidesPerView: 4,
+                spaceBetween: 20,
+            },
+        },
+        autoplay: {
+            delay: 2500,
+            disableOnInteraction: true,
+            pauseOnMouseEnter: true,
+        },
+
+    });
+
+
+
 
 
     // Services Slider
@@ -379,6 +419,12 @@ $(function () {
         },
     });
 
+
+    const listItems = document.querySelectorAll(".insight-list ul li");
+
+    listItems.forEach((item, index) => {
+        item.setAttribute("data-number", index + 1);
+    });
 
     // accordion
     accordionBox();

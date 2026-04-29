@@ -113,6 +113,12 @@ p {
         position: absolute;
         top: 0;
         width: 100%;
+
+        .imgbox {
+            img {
+                position: relative;
+            }
+        }
     }
 
     .mainslidesec {
@@ -359,6 +365,8 @@ p {
             transition: all 0.3s ease;
         }
     }
+
+
 }
 
 
@@ -373,7 +381,7 @@ p {
     justify-content: center;
     font-weight: bold;
     opacity: 0;
-    row-gap: 70px;
+    row-gap: 50px;
 
     .grid-b {
         display: grid;
@@ -484,6 +492,28 @@ p {
 }
 
 
+// 3 Grid WIth BTN Start
+
+.portfolio-grid-with-btn {
+    .card {
+        .project-box {
+            .norm-box {
+                .proj-img img {
+                    height: 325px !important;
+                }
+            }
+
+            .hover-box {
+                .hover-img {
+                    aspect-ratio: 1 / 1.045;
+                }
+            }
+        }
+    }
+}
+
+// 3 Grid WIth BTN End
+
 // Inner Banner Start
 
 .bannerimg {
@@ -545,6 +575,8 @@ p {
     }
 }
 
+// Project Detail End
+
 // Project Gallery Start
 
 .proj-gallery {
@@ -567,6 +599,7 @@ p {
 
 // Project Gallery End
 
+
 // Related Project Start
 
 .related-portfolio {
@@ -583,12 +616,179 @@ p {
             border-color: rgb(255 255 255 / 40%);
         }
     }
+
+    &.related-insights {
+        .card {
+            .project-box {
+                .hover-box {
+                    .hover-img {
+                        aspect-ratio: 1 / 1.04;
+                    }
+                }
+            }
+        }
+    }
 }
 
 // Related Project End
 
-// Project Detail End
 
+
+// Insight Detail Start
+
+.insight-content {
+    .content-box {
+        .insight-list {
+            ul {
+                li {
+                    position: relative;
+                    padding-left: 20px;
+
+                    &::before {
+                        content: attr(data-number) ".";
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
+
+    .subscribe-box {
+        border: 1px solid rgb(30 30 30 / 50%);
+        padding: 40px;
+        margin-left: 80px;
+        position: sticky;
+        top: 130px;
+
+        h2 {
+            font-size: 30px;
+        }
+
+
+    }
+}
+
+
+.social-share {
+    ul {
+        li {
+            a {
+                width: 38px;
+                height: 38px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                border: 1px solid rgba(0, 0, 0, 0.45);
+                border-radius: 50%;
+                font-size: 16px;
+                color: #000000;
+                transition: 0.3s ease all;
+
+                &:hover {
+                    color: $theme-white !important;
+                    background-color: $theme-black;
+                }
+            }
+        }
+    }
+}
+
+form.updated-form {
+    .input-wrapper {
+
+        input,
+        select,
+        textarea {
+            background: transparent;
+            border: 1px solid rgba(30, 30, 30, 0.30);
+            padding: 17px 20px;
+            outline: none;
+            text-transform: uppercase;
+            font-size: var(--font-size-14);
+        }
+    }
+
+    .input-btn {
+        margin-top: 15px;
+    }
+}
+
+// Insight Detail End
+
+// Contact Sec Start
+
+.contact-main {
+    .contact-content {
+        ul {
+            margin-top: 35px;
+
+            li {
+                a {
+                    color: var(--theme-font-color);
+                    position: relative;
+
+                    &:before {
+                        content: '';
+                        position: absolute;
+                        right: -5px;
+                        top: 3px;
+                        height: 22px;
+                        width: 1px;
+                        background-color: var(--theme-font-color);
+                    }
+
+                    &:last-child {
+                        &:before {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        .social-share {
+            margin-top: 35px;
+        }
+    }
+
+    .contact-box {
+        border: 1px solid rgb(30 30 30 / 50%);
+        padding: 32px 38px;
+        margin-left: 60px;
+
+        form {
+            .row {
+                margin-left: -10px;
+            }
+
+            .input-wrapper {
+                margin-left: 10px;
+
+                select {
+                    appearance: none;
+                    position: relative;
+                    cursor: pointer;
+                }
+
+                img {
+                    position: absolute;
+                    right: 20px;
+                    top: 70%;
+                    transform: translate(0, -50%);
+                }
+                textarea{
+                    height: 57px;
+                }
+            }
+        }
+    }
+}
+
+// Contact Sec End
 
 
 // Responsible End
