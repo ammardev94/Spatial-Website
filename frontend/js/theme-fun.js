@@ -120,6 +120,40 @@ $(function () {
                 );
 
         }
+
+
+        if ($("#about").length) {
+            let responseTL = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#about .responsible",
+                    start: "-150% top",
+                    end: "+=150%",
+                    scrub: true,
+                    // pin: true,
+                    // markers: true,
+                    // ease:"power1.in"
+                },
+            });
+
+            responseTL
+                .fromTo(
+                    "#about #response-left",
+                    { x: 1000 },
+                    { x: 0, ease: "none", duration: 4 },
+                )
+                .fromTo(
+                    "#about #response-content",
+                    { y: 1000 },
+                    { y: 0, ease: "none", duration: 4 },
+                    "<",
+                )
+                .fromTo(
+                    "#about #response-right",
+                    { x: -1000 },
+                    { x: 0, ease: "none", duration: 4 },
+                    "<",
+                );
+        }
     });
 
 
@@ -215,7 +249,7 @@ $(function () {
                 width: 'calc(100% + ' + marginLEftRight + 'px)'
             });
 
-            $('.forJqueryOnly .facilities-list-slider').css({
+            $('.forJqueryOnly .material-slider').css({
                 width: 'calc(100% + ' + marginLEftRight + 'px)'
             });
 
@@ -490,12 +524,91 @@ $(function () {
     });
 
 
+
+    const materialSlider = new Swiper(".material-slider", {
+        loop: true,
+        slidesPerView: 1,
+        spaceBetween: 20,
+        speed: 800,
+        watchSlidesProgress: true,
+        breakpoints: {
+
+            320: {
+                slidesPerView: 2,
+                spaceBetween: 5,
+            },
+            640: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+            },
+            768: {
+                slidesPerView: 3,
+                spaceBetween: 15,
+            },
+            1024: {
+                slidesPerView: 3.2,
+                spaceBetween: 30,
+            },
+        },
+    });
+
+     const ptlSlider = new Swiper(".property-transform-slider", {
+        loop: true,
+        slidesPerView: 1,
+        spaceBetween: 20,
+        speed: 800,
+        watchSlidesProgress: true,
+        breakpoints: {
+
+            320: {
+                slidesPerView: 2,
+                spaceBetween: 5,
+            },
+            640: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+            },
+            768: {
+                slidesPerView: 3,
+                spaceBetween: 15,
+            },
+            1024: {
+                slidesPerView: 3,
+                spaceBetween: 45,
+            },
+        },
+    });
+
+    const pgSlider = new Swiper(".pg-slider", {
+        loop: true,
+        slidesPerView: 1,
+        spaceBetween: 0,
+        speed: 800,
+        watchSlidesProgress: true,
+        breakpoints: {
+
+            320: {
+                slidesPerView: 2,
+            },
+            640: {
+                slidesPerView: 3,
+            },
+            768: {
+                slidesPerView: 3,
+            },
+            1024: {
+                slidesPerView: 3,
+                spaceBetween: 0,
+            },
+        },
+    });
+
     const listItems = document.querySelectorAll(".insight-list ul li");
 
     listItems.forEach((item, index) => {
         item.setAttribute("data-number", index + 1);
     });
-    
+
 
     // accordion
     accordionBox();
