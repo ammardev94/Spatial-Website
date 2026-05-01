@@ -161,3 +161,79 @@ footer {
         }
     }
 }
+
+@media (max-width:1200px) {
+    footer .footer-middle .f-content {
+        padding-right: 0px;
+    }
+}
+
+@media (max-width:991px) {
+    footer .footer-middle .f-list-main-box {
+        margin-left: 0px;
+        margin-top: 40px;
+    }
+}
+
+@media (max-width:767px) {
+    footer {
+        .footer-top .f-form {
+            margin-top: 40px;
+            max-width: 100%;
+        }
+        .footer-bottom{
+            text-align: center;
+            ul{
+                margin-top: 20px !important;
+                justify-content: center !important;
+            }
+        }
+    }
+}
+
+@media (max-width:641px) {
+    footer .footer-middle .f-list-main-box {
+        flex-wrap: wrap;
+        gap: 20px;
+
+        .f-list-box {
+            flex: 0 0 100%;
+            border-bottom: 1px solid;
+            padding-bottom: 10px;
+
+            ul {
+                margin-bottom: 12px !important;
+                display: none !important;
+            }
+
+            .f-list {
+                gap: 15px;
+                position: relative;
+
+                &:before {
+                    content: '';
+                    position: absolute;
+                    right: 10px;
+                    top: 1px;
+                    background-image: url(images/select-arrow.svg);
+                    height: 20px;
+                    width: 15px;
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    transition: .3s ease all;
+                }
+
+                &.open {
+                    &:before {
+                        transform: rotate(-180deg);
+                    }
+
+                    ul {
+                        display: flex !important;
+                    }
+                }
+            }
+        }
+    }
+}

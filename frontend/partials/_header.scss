@@ -91,9 +91,11 @@ header {
 		padding: 30px 0;
 		border-bottom: 1px solid rgba(30, 30, 30, 0.40);
 		backdrop-filter: blur(12.5px);
-		&.sticky{
+
+		&.sticky {
 			padding: 20px 0;
 		}
+
 		.logo {
 			img {
 				filter: inherit;
@@ -308,6 +310,10 @@ header {
 	header {
 		padding: 25px 0;
 
+		&.header-dark {
+			padding: 25px 0;
+		}
+
 		&.sticky {
 			padding: 20px 0;
 		}
@@ -349,6 +355,27 @@ header {
 	.mobile-navbar-main {
 		width: 85%;
 		padding: 25px;
+	}
+}
+
+@media (max-width:640px) {
+	.project-detail {
+		.port-content-box {
+			.btns {
+				.btn-box {
+					width: 100%;
+					flex: 0 0 100%;
+					max-width: 100%;
+
+					.btn {
+						width: 100%;
+						flex: 0 0 100%;
+						max-width: 100%;
+						justify-content: center;
+					}
+				}
+			}
+		}
 	}
 }
 

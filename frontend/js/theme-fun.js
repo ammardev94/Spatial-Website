@@ -345,11 +345,11 @@ $(function () {
                 spaceBetween: 0,
             },
         },
-        autoplay: {
-            delay: 2500,
-            disableOnInteraction: true,
-            pauseOnMouseEnter: true,
-        },
+        // autoplay: {
+        //     delay: 2500,
+        //     disableOnInteraction: true,
+        //     pauseOnMouseEnter: true,
+        // },
 
     });
 
