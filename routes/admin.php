@@ -21,11 +21,11 @@ use App\Http\Controllers\Admin\InsightCategoryController;
 Route::group(['prefix' => 'admin'], function () {
 
     Route::get('/login', [AuthController::class , 'login'])->name('admin.login');
-    Route::post('/login', [AuthController::class , 'login_attempt'])->name('admin.login.attempt');
+    Route::post('/login', [AuthController::class , 'login_attempt'])->middleware('throttle:5,1')->name('admin.login.attempt');
     Route::get('/forgot-password', [AuthController::class , 'forgot_password'])->name('admin.forgot.password');
-    Route::post('/forgot-password', [AuthController::class , 'forgot_password_attempt'])->name('admin.forgot.password.attempt');
+    Route::post('/forgot-password', [AuthController::class , 'forgot_password_attempt'])->middleware('throttle:5,1')->name('admin.forgot.password.attempt');
     Route::get('/reset-password/{token}', [AuthController::class , 'reset_password'])->name('admin.reset.password');
-    Route::post('/reset-password', [AuthController::class , 'reset_password_attempt'])->name('admin.reset.password.attempt');
+    Route::post('/reset-password', [AuthController::class , 'reset_password_attempt'])->middleware('throttle:5,1')->name('admin.reset.password.attempt');
 
     Route::group(['middleware' => 'roleAuth:admin'], function () {
 

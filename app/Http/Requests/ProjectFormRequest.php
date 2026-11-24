@@ -29,9 +29,9 @@ class ProjectFormRequest extends FormRequest
             'location' => 'nullable|string|max:255',
             'project_category_id' => 'nullable|exists:project_categories,id',
             'overview' => 'nullable|array',
-            'feature_img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp',
-            'main_img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp',
-            'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp',
+            'feature_img' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp',
+            'main_img' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp',
+            'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp',
         ];
     }
 }

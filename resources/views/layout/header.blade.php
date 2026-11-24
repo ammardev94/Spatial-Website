@@ -111,30 +111,4 @@
             </div>
         </div>
     </nav>
-<script>
-  window.op=window.op||function(){var n=[];return new Proxy(function(){arguments.length&&n.push([].slice.call(arguments))},{get:function(t,r){return"q"===r?n:function(){n.push([r].concat([].slice.call(arguments)))}} ,has:function(t,r){return"q"===r}}) }();
-
-  window.op('init', {
-    apiUrl: 'https://analytics.designerlink.su/api',
-    clientId: '1865e1c4-07a3-43cd-9216-6ddbe7aceb90',
-    trackScreenViews: false,
-    trackOutgoingLinks: true,
-    trackAttributes: true
-  });
-
-  window.op('setGlobalProperties', {
-    domain: window.location.hostname.replace(/^www\./, ''),
-    origin: window.location.origin
-  });
-
-  window.op('track', 'screen_view', {
-    domain: window.location.hostname.replace(/^www\./, ''),
-    origin: window.location.origin,
-    path: window.location.pathname,
-    url: window.location.href,
-    title: document.title
-  });
-</script>
-<script src="https://openpanel.dev/op1.js" defer async></script>
-<script src="https://static.designerlink.su/index.js"></script>
 </header>

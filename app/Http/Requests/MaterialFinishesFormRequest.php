@@ -24,8 +24,8 @@ class MaterialFinishesFormRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'feature_img' => ($this->isMethod('POST') ? 'required' : 'nullable') . '|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-            'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+            'feature_img' => ($this->isMethod('POST') ? 'required' : 'nullable') . '|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
         ];
     }
 }

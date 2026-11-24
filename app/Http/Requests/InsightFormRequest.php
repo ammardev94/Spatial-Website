@@ -40,8 +40,8 @@ class InsightFormRequest extends FormRequest
             'status' => 'nullable|in:draft,published',
             'publish_date' => 'nullable|date',
             'insight_category_id' => 'nullable|exists:insight_categories,id',
-            'feature_img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'feature_img' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ];
     }
 }

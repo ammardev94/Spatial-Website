@@ -40,8 +40,10 @@ class AuthController extends Controller
 
             if (Auth::guard('admin')->attempt($credentials, $remember)) {
 
-                if (! empty($request->input('ref'))) {
-                    return redirect($request->input('ref'));
+                // Only follow ?ref back into this site (prevents open redirects)
+                $ref = (string) $request->input('ref');
+                if ($ref !== '' && parse_url($ref, PHP_URL_HOST) === $request->getHost()) {
+                    return redirect($ref);
                 }
 
                 return redirect()->route('admin.dashboard');
@@ -52,7 +54,7 @@ class AuthController extends Controller
             return redirect()->back();
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            Session::flash('msg.error', $e->getMessage());
+            Session::flash('msg.error', 'Something went wrong. Please try again.');
 
             return redirect()->back();
         }
@@ -108,7 +110,7 @@ class AuthController extends Controller
             return redirect()->back();
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            Session::flash('msg.error', $e->getMessage());
+            Session::flash('msg.error', 'Something went wrong. Please try again.');
 
             return redirect()->back();
         }

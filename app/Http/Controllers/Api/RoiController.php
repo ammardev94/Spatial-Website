@@ -25,10 +25,11 @@ class RoiController extends Controller
             ], 201);
         }
         catch (Exception $e) {
+            report($e);
+
             return response()->json([
                 'success' => false,
                 'message' => 'An error occurred while submitting your request.',
-                'error' => $e->getMessage()
             ], 500);
         }
     }

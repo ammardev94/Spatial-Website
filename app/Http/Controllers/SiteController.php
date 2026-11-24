@@ -18,6 +18,7 @@ use App\Http\Requests\ContactRequest;
 use App\Http\Requests\StoreRoiRequestRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class SiteController extends Controller
 {
@@ -170,10 +171,8 @@ class SiteController extends Controller
             });
     
         } catch (\Exception $e) {
-            
-            return back()
-                ->withInput()
-                ->with('error', 'Mail error: ' . $e->getMessage());
+            // The submission is already saved (viewable in admin); don't expose mail errors to visitors
+            Log::error('ROI request notification email failed: ' . $e->getMessage());
         }
 
         return redirect(route('roi-calculator'))->with('success', 'Thank you for submitting your ROI calculation request! We will review your information and get back to you soon.');
@@ -197,9 +196,8 @@ class SiteController extends Controller
 
 
         } catch (\Exception $e) {
-            return back()
-                ->withInput()
-                ->with('error', 'Mail error: ' . $e->getMessage());
+            // The submission is already saved (viewable in admin); don't expose mail errors to visitors
+            Log::error('Contact form notification email failed: ' . $e->getMessage());
         }
 
         return redirect()->route('thank-you')->with('contact_success', 'Thank you! Your request has been submitted successfully. Our team will get back to you shortly.');
