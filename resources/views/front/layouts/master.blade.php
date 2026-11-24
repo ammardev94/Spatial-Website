@@ -8,6 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('frontend/style.css') }}?{{ time() }}">
 	<link rel="icon" href="{{ asset('frontend/images/favicon-img.svg') }}" type="image/svg">
 	<title>@yield('title')</title>
+	@stack('styles')
 </head>
 
 <body class="">

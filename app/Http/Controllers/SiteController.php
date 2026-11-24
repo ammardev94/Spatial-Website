@@ -53,7 +53,11 @@ class SiteController extends Controller
     }
     public function contact(): View
     {
-        return view('front.contact')->with('page',Page::with('pageMetas','pageFiles')->where('id',1)->first());
+        $services = Service::with('heroImage')->orderBy('id')->get();
+        $projects = Project::with('feature_img')->latest()->take(6)->get();
+
+        return view('front.contact', compact('services', 'projects'))
+            ->with('page', Page::with('pageMetas', 'pageFiles')->where('id', 1)->first());
     }
     public function about(): View
     {

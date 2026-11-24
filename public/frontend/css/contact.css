@@ -1,0 +1,104 @@
+/* Contact page — sections added for the Figma redesign.
+   Kept out of style.scss because public/frontend/style.css carries live-only
+   hand edits that a recompile would drop. Copy this file to public/frontend/css/. */
+
+/* ---------- Phone field (intl-tel-input) ---------- */
+#contact-page .iti {
+  width: 100%;
+  --iti-path-flags-1x: url("https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.0/build/img/flags.webp");
+  --iti-path-flags-2x: url("https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.0/build/img/flags@2x.webp");
+  --iti-path-globe-1x: url("https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.0/build/img/globe.webp");
+  --iti-path-globe-2x: url("https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.0/build/img/globe@2x.webp");
+}
+#contact-page .iti input[type="tel"] {
+  width: 100%;
+}
+#contact-page .iti__selected-country {
+  background: transparent;
+}
+#contact-page .iti__selected-dial-code {
+  font-size: 14px;
+  color: rgba(30, 30, 30, 0.6);
+}
+#contact-page .iti__country-list,
+#contact-page .iti__dropdown-content {
+  text-transform: none;
+}
+
+/* ---------- Hero + form spacing (matched to Figma at 1920px) ---------- */
+#contact-page .contact-main-page h1 {
+  line-height: 1.125;
+}
+#contact-page .contact-main-page .updated-form {
+  gap: 32px;
+}
+#contact-page .contact-main-page .contact-box form .input-btn {
+  margin-top: 25px;
+}
+@media (min-width: 1200px) {
+  #contact-page .contact-main-page .contact-box {
+    margin-left: 35px;
+    padding: 43px 38px 48px;
+  }
+}
+
+/* ---------- Everything your property needs ---------- */
+.contact-services h2 {
+  margin-bottom: 50px !important;
+}
+.contact-services-slider {
+  overflow: visible;
+}
+.contact-services .cs-card {
+  gap: 15px;
+}
+.contact-services .cs-img {
+  aspect-ratio: 566 / 782;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+.contact-services .cs-img img {
+  transition: transform 0.8s ease;
+}
+.contact-services .cs-img:hover img {
+  transform: scale(1.04);
+}
+.contact-services .cs-card h3 {
+  font-weight: 600;
+  color: #1e1e1e;
+}
+.contact-services .cs-text {
+  font-size: 16px;
+  line-height: 1.4;
+  color: rgba(30, 30, 30, 0.5);
+  max-width: 470px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.contact-services .btn-box {
+  margin-top: 10px;
+}
+
+/* ---------- Transformation in action ---------- */
+.contact-projects h2 {
+  margin-bottom: 60px !important;
+}
+/* style.css hides every .card until the portfolio tab filter fades it in;
+   this grid has no tabs, so show it (same fix as .related-portfolio .card). */
+.contact-projects .card {
+  opacity: 1;
+}
+@media (min-width: 1200px) {
+  #contact-page .contact-projects {
+    padding-bottom: 200px;
+  }
+}
+
+@media (max-width: 991px) {
+  .contact-services h2,
+  .contact-projects h2 {
+    margin-bottom: 30px !important;
+  }
+}
