@@ -462,11 +462,6 @@
                             $submitText = $submitText ?? 'Submit request';
                         @endphp
                         
-                        @if (session('contact_success'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('contact_success') }}
-                            </div>
-                        @endif
                         
                         <form method="POST" action="{{ route('contact.store') }}"
                             class="updated-form d-flex flex-column gap-20 primary-font fc-secondary text-uppercase">

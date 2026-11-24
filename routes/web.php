@@ -34,6 +34,7 @@ Route::get('/insights/{slug}', [SiteController::class, 'insightDetails'])->name(
 Route::get('/showroom', [SiteController::class, 'showroom'])->name('showroom');
 Route::get('/partners', [SiteController::class, 'partners'])->name('partners');
 Route::post('/contact-us', [SiteController::class, 'storeContact'])->name('contact.store');
+Route::get('/thank-you', [SiteController::class, 'thankYou'])->name('thank-you');
 Route::get('/springs-villa-contemporary-renovation',[SiteController::class, 'comming_soon']);
 
 

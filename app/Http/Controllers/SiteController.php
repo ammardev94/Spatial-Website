@@ -202,7 +202,16 @@ class SiteController extends Controller
                 ->with('error', 'Mail error: ' . $e->getMessage());
         }
 
-        return redirect(route('contact'))->with('contact_success', 'Thank you! Your request has been submitted successfully.');
+        return redirect()->route('thank-you')->with('contact_success', 'Thank you! Your request has been submitted successfully. Our team will get back to you shortly.');
+    }
+    public function thankYou(): View|RedirectResponse
+    {
+        // Only reachable right after a successful submission
+        if (! session()->has('contact_success')) {
+            return redirect()->route('contact');
+        }
+
+        return view('front.thank-you');
     }
     public function comming_soon()
     {
