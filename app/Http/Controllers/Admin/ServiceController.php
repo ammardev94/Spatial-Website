@@ -62,7 +62,7 @@ class ServiceController extends Controller
      */
     public function edit(Service $service)
     {
-        $service->load(['sections.items', 'subServices.items']);
+        $service->load(['sections.image', 'sections.items', 'subServices.items']);
         return view('admin.services.edit', compact('service'));
     }
 

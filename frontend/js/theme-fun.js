@@ -154,6 +154,42 @@ $(function () {
                     "<",
                 );
         }
+        
+        
+        if ($("#partnership").length) {
+            let responseTL = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#partnership .responsible",
+                    start: "-150% top",
+                    end: "+=150%",
+                    scrub: true,
+                    // pin: true,
+                    // markers: true,
+                    // ease:"power1.in"
+                },
+            });
+
+            responseTL
+                .fromTo(
+                    "#partnership #response-left",
+                    { x: 1000 },
+                    { x: 0, ease: "none", duration: 4 },
+                )
+                .fromTo(
+                    "#partnership #response-content",
+                    { y: 1000 },
+                    { y: 0, ease: "none", duration: 4 },
+                    "<",
+                )
+                .fromTo(
+                    "#partnership #response-right",
+                    { x: -1000 },
+                    { x: 0, ease: "none", duration: 4 },
+                    "<",
+                );
+        }
+        
+        
     });
 
 

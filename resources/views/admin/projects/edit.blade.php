@@ -41,10 +41,31 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
+                                <label for="slug">Slug</label>
+                                <input type="text" class="form-control" name="slug" id="slug"
+                                    value="{{ old('slug', $project->slug) }}" placeholder="Leave blank to generate from title">
+                                @error('slug') <span class="text-danger small">{{ $message }}</span> @enderror
+                                <small class="text-muted">Optional. If left blank, slug is generated from title.</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group">
                                 <label for="location">Location</label>
                                 <input type="text" class="form-control" name="location" id="location"
                                     value="{{ old('location', $project->location) }}">
                                 @error('location') <span class="text-danger small">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                                <label for="project_category_id">Category</label>
+                                <select class="form-control" name="project_category_id" id="project_category_id">
+                                    <option value="">Select Category</option>
+                                    @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" {{ old('project_category_id', $project->project_category_id) == $category->id ? 'selected' : '' }}>{{ $category->title }}</option>
+                                    @endforeach
+                                </select>
+                                @error('project_category_id') <span class="text-danger small">{{ $message }}</span> @enderror
                             </div>
                         </div>
                         <div class="col-md-12 mb-3">

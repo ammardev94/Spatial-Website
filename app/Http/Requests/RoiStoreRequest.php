@@ -24,10 +24,11 @@ class RoiStoreRequest extends FormRequest
         return [
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'purchase_price' => 'required|string|max:255',
-            'renovation_budget' => 'required|string|max:255',
-            'target_sale_price' => 'required|string|max:255',
-            'timeline' => 'required|string|max:255',
+            'purchase_price' => 'required',
+            'renovation_budget' => 'required',
+            'target_sale_price' => 'required',
+            'timeline' => 'required',
+            'plot_size' => 'required',
         ];
     }
 }

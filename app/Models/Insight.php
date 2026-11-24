@@ -20,6 +20,7 @@ class Insight extends Model
         'optimistic_description',
         'status',
         'publish_date',
+        'insight_category_id',
     ];
 
     protected $casts = [
@@ -48,6 +49,14 @@ class Insight extends Model
     public function gallery()
     {
         return $this->morphMany(Image::class , 'imageable')->where('tag', 'gallery');
+    }
+
+    /**
+     * Relationship with InsightCategory
+     */
+    public function category()
+    {
+        return $this->belongsTo(InsightCategory::class, 'insight_category_id');
     }
 
 

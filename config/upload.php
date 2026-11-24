@@ -7,7 +7,7 @@ return [
     ],
 
     'file' => [
-        'max_size' => env('MAX_FILE_SIZE', 10485760),
-        'types' => explode(',', env('ALLOWED_FILE_TYPES', 'pdf,doc,docx,xlsx,xls,ppt,pptx')),
+        'max_size' => env('MAX_FILE_SIZE', 40485760),
+        'types' => explode(',', env('ALLOWED_FILE_TYPES', 'pdf,doc,docx,xlsx,xls,ppt,pptx,mp4')),
     ],
 ];

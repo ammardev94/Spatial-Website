@@ -3,10 +3,13 @@
 namespace App\Providers;
 
 use App\Models\Role;
+use App\Models\GeneralInformation;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +27,9 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        Schema::defaultStringLength(191);
+        // Always force your custom domain
+        URL::forceRootUrl('https://spatialpropertygroup.com/ae');
         View::composer('*', function ($view) {
             
             $route = request()->route();
@@ -31,6 +37,9 @@ class AppServiceProvider extends ServiceProvider
 
             Log::info("Visited Page: ". $pageCode);
 
+            // Share general information with all views
+            $generalInfo = GeneralInformation::first();
+            $view->with('generalInfo', $generalInfo);
         });
     }
 

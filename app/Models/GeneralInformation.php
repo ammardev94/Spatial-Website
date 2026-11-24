@@ -15,8 +15,15 @@ class GeneralInformation extends Model
         'email',
         'phone',
         'address',
+        'google_map_link',
         'instagram_link',
         'facebook_link',
         'ticktok_link',
+        'header_logo',
+        'footer_logo',
+        'footer_description',
+        'trademark_line',
+        'privacy_link',
+        'cookie_policy_link',
     ];
 }

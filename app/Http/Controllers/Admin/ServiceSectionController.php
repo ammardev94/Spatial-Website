@@ -29,12 +29,19 @@ class ServiceSectionController extends Controller
         $request->validate([
             'service_id' => 'required|exists:services,id',
             'title' => 'required|string|max:255',
-            'type' => 'required|in:text,list,grid,video',
+            'type' => 'required|in:text,list,list-left,list-right,grid,video',
+            'image' => 'nullable|image',
         ]);
 
         try {
-            $section = ServiceSection::create($request->all());
-            return response()->json(['success' => true, 'section' => $section]);
+            $section = ServiceSection::create($request->except('image'));
+
+            if ($request->hasFile('image')) {
+                $path = $request->file('image')->store('services/sections', 'public');
+                $section->image()->create(['url' => $path, 'tag' => 'main']);
+            }
+
+            return response()->json(['success' => true, 'section' => $section->load('image')]);
         }
         catch (Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
@@ -48,11 +55,23 @@ class ServiceSectionController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'type' => 'required|in:text,list,grid,video',
+            'type' => 'required|in:text,list,list-left,list-right,grid,video',
+            'image' => 'nullable|image',
         ]);
 
         try {
-            $section->update($request->all());
+            $section->update($request->except('image'));
+
+            if ($request->hasFile('image')) {
+                // Delete old image if exists
+                if ($section->image) {
+                    Storage::disk('public')->delete($section->image->url);
+                    $section->image->delete();
+                }
+                $path = $request->file('image')->store('services/sections', 'public');
+                $section->image()->create(['url' => $path, 'tag' => 'main']);
+            }
+
             return response()->json(['success' => true]);
         }
         catch (Exception $e) {
@@ -66,6 +85,11 @@ class ServiceSectionController extends Controller
     public function destroy(ServiceSection $section)
     {
         try {
+            // Cleanup section image
+            if ($section->image) {
+                Storage::disk('public')->delete($section->image->url);
+                $section->image->delete();
+            }
             // Cleanup items images
             foreach ($section->items as $item) {
                 if ($item->image) {
@@ -90,7 +114,7 @@ class ServiceSectionController extends Controller
             'section_id' => 'required|exists:service_sections,id',
             'title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image',
             'video_url' => 'nullable|string|max:500',
             'button_text' => 'nullable|string|max:100',
             'button_link' => 'nullable|string|max:500',
@@ -125,6 +149,41 @@ class ServiceSectionController extends Controller
             }
             $item->delete();
             return response()->json(['success' => true]);
+        }
+        catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+    /**
+     * Update an item.
+     */
+    public function updateItem(Request $request, ServiceSectionItem $item)
+    {
+        $request->validate([
+            'title' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image',
+            'video_url' => 'nullable|string|max:500',
+            'button_text' => 'nullable|string|max:100',
+            'button_link' => 'nullable|string|max:500',
+        ]);
+
+        try {
+            $data = $request->except('image');
+            $data['open_in_new_tab'] = $request->has('open_in_new_tab');
+            $item->update($data);
+
+            if ($request->hasFile('image')) {
+                // Delete old image if exists
+                if ($item->image) {
+                    Storage::disk('public')->delete($item->image->url);
+                    $item->image->delete();
+                }
+                $path = $request->file('image')->store('services/sections', 'public');
+                $item->image()->create(['url' => $path, 'tag' => 'item']);
+            }
+
+            return response()->json(['success' => true, 'item' => $item->load('image')]);
         }
         catch (Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);

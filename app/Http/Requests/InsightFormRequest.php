@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class InsightFormRequest extends FormRequest
 {
@@ -23,6 +24,13 @@ class InsightFormRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
+            'slug' => [
+                'nullable',
+                'string',
+                'max:255',
+                'alpha_dash',
+                Rule::unique('insights', 'slug')->ignore($this->insight),
+            ],
             'outlook_title' => 'nullable|string|max:255',
             'outlook_description' => 'nullable|string',
             'why_title' => 'nullable|string|max:255',
@@ -31,6 +39,7 @@ class InsightFormRequest extends FormRequest
             'optimistic_description' => 'nullable|string',
             'status' => 'nullable|in:draft,published',
             'publish_date' => 'nullable|date',
+            'insight_category_id' => 'nullable|exists:insight_categories,id',
             'feature_img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ];

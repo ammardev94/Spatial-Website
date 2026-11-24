@@ -39,6 +39,15 @@
                                 @error('title') <span class="text-danger small">{{ $message }}</span> @enderror
                             </div>
                         </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group">
+                                <label for="slug">Slug</label>
+                                <input type="text" class="form-control" name="slug" id="slug"
+                                    value="{{ old('slug') }}" placeholder="Optional: leave empty to auto-generate from title">
+                                @error('slug') <span class="text-danger small">{{ $message }}</span> @enderror
+                                <small class="text-muted">If empty, the slug will be generated from the title automatically.</small>
+                            </div>
+                        </div>
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="status">Status</label>
@@ -56,6 +65,17 @@
                                     value="{{ old('publish_date') }}">
                                 <small class="text-muted">Leave empty for immediate publication upon status change to
                                     Published.</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                                <label for="insight_category_id">Category</label>
+                                <select class="form-select shadow-none" name="insight_category_id" id="insight_category_id">
+                                    <option value="">Select Category</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}" {{ old('insight_category_id') == $category->id ? 'selected' : '' }}>{{ $category->title }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -167,12 +187,22 @@
 @section('js')
 <script>
     $(document).ready(function () {
+        
+        $('#outlook_description').summernote('destroy');
+        $('#optimistic_description').summernote('destroy');
+        $('#why_description').summernote('destroy');
 
-        $('#outlook_description').summernote({ height: 150 });
-        $('#why_description').summernote({ height: 150 });
-        $('#optimistic_description').summernote({ height: 150 });
-        $('#pessimistic_description').summernote({ height: 150 });
-        $('#conclusion_description').summernote({ height: 150 });
+        $('#outlook_description, #why_description, #optimistic_description')
+        .summernote({
+            height: 150,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'clear']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'picture']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
 
         // Image Previews
         function readURL(input, previewId) {

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Project extends Model
 {
@@ -15,6 +16,7 @@ class Project extends Model
         'description',
         'location',
         'overview',
+        'project_category_id',
     ];
 
     /**
@@ -46,5 +48,28 @@ class Project extends Model
     public function gallery()
     {
         return $this->morphMany(Image::class , 'imageable')->where('tag', 'gallery');
+    }
+
+    /**
+     * Auto-generate slug from title when missing.
+     */
+    protected static function booted()
+    {
+        static::saving(function ($project) {
+            if (empty($project->slug) && ! empty($project->title)) {
+                $project->slug = Str::slug($project->title);
+            }
+            elseif (! empty($project->slug)) {
+                $project->slug = Str::slug($project->slug);
+            }
+        });
+    }
+
+    /**
+     * Get the project's category.
+     */
+    public function category()
+    {
+        return $this->belongsTo(ProjectCategory::class, 'project_category_id');
     }
 }

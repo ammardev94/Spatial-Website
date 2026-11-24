@@ -59,10 +59,23 @@
                                 <span>Projects</span>
                             </a>
                         </li>
+                        <li class="{{ request()->is('admin/project-categories*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.project-categories.index') }}">
+                                <i class="ti ti-briefcase"></i>
+                                <span>Project Categories</span>
+                            </a>
+                        </li>
+                        
                         <li class="{{ request()->is('admin/insights*') ? 'active' : '' }}">
                             <a href="{{ route('admin.insights.index') }}">
                                 <i class="ti ti-news"></i>
                                 <span>Insights</span>
+                            </a>
+                        </li>
+                        <li class="{{ request()->is('admin/insight-categories*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.insight-categories.index') }}">
+                                <i class="ti ti-tags"></i>
+                                <span>Insight Categories</span>
                             </a>
                         </li>
                         <li class="{{ request()->is('admin/material-finishes*') ? 'active' : '' }}">

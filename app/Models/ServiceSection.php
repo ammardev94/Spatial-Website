@@ -29,6 +29,22 @@ class ServiceSection extends Model
      */
     public function items()
     {
-        return $this->hasMany(ServiceSectionItem::class , 'section_id')->orderBy('order', 'asc');
+        return $this->hasMany(ServiceSectionItem::class , 'section_id')->orderBy('id', 'desc');
+    }
+
+    /**
+     * Get the images for this section.
+     */
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
+
+    /**
+     * Get the main image for this section.
+     */
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable')->where('tag', 'main');
     }
 }

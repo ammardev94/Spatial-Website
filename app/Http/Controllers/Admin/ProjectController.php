@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Exception;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use App\Models\ProjectCategory;
 
 class ProjectController extends Controller
 {
@@ -28,7 +29,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create');
+        $categories = ProjectCategory::all();
+        return view('admin.projects.create', compact('categories'));
     }
 
     /**
@@ -38,7 +40,7 @@ class ProjectController extends Controller
     {
         try {
             $validated = $request->validated();
-            $validated['slug'] = Str::slug($validated['title']);
+            $validated['slug'] = trim($validated['slug'] ?? '') ?: Str::slug($validated['title']);
 
             $project = Project::create($validated);
 
@@ -59,7 +61,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $project->load(['feature_img', 'main_img', 'gallery']);
-        return view('admin.projects.edit', compact('project'));
+        $categories = ProjectCategory::all();
+        return view('admin.projects.edit', compact('project', 'categories'));
     }
 
     /**
@@ -69,7 +72,7 @@ class ProjectController extends Controller
     {
         try {
             $validated = $request->validated();
-            $validated['slug'] = Str::slug($validated['title']);
+            $validated['slug'] = trim($validated['slug'] ?? '') ?: Str::slug($validated['title']);
 
             $project->update($validated);
 

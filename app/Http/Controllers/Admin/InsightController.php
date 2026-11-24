@@ -27,7 +27,8 @@ class InsightController extends Controller
      */
     public function create()
     {
-        return view('admin.insights.create');
+        $categories = \App\Models\InsightCategory::all();
+        return view('admin.insights.create', compact('categories'));
     }
 
     /**
@@ -37,7 +38,9 @@ class InsightController extends Controller
     {
         try {
             $validated = $request->validated();
-            $validated['slug'] = Str::slug($validated['title']);
+            $validated['slug'] = !empty($validated['slug'])
+                ? Str::slug($validated['slug'])
+                : Str::slug($validated['title']);
 
             $insight = Insight::create($validated);
 
@@ -57,7 +60,8 @@ class InsightController extends Controller
      */
     public function edit(Insight $insight)
     {
-        return view('admin.insights.edit', compact('insight'));
+        $categories = \App\Models\InsightCategory::all();
+        return view('admin.insights.edit', compact('insight', 'categories'));
     }
 
     /**
@@ -67,7 +71,9 @@ class InsightController extends Controller
     {
         try {
             $validated = $request->validated();
-            $validated['slug'] = Str::slug($validated['title']);
+            $validated['slug'] = !empty($validated['slug'])
+                ? Str::slug($validated['slug'])
+                : Str::slug($validated['title']);
 
             $insight->update($validated);
 

@@ -18,5 +18,6 @@ class RoiRequest extends Model
         'renovation_budget',
         'target_sale_price',
         'timeline',
+        'plot_size'
     ];
 }

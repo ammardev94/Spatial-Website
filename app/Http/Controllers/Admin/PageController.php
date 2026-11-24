@@ -165,9 +165,15 @@ class PageController extends Controller
 
             $baseDirectory = 'page-images/' . $page->id;
 
+            // Get all existing file ref_points to exclude them from meta processing
+            $existingFileRefPoints = $page->pageFiles()
+                ->pluck('ref_point')
+                ->toArray();
+
             $filteredInputs = collect($request->except(['_token', '_method']))
-                ->filter(function ($value, $key) use ($request) {
-                return !$request->hasFile($key);
+                ->filter(function ($value, $key) use ($request, $existingFileRefPoints) {
+                // Exclude fields that are file inputs or already stored as PageFiles
+                return !$request->hasFile($key) && !in_array($key, $existingFileRefPoints);
             });
 
             $metaData = [];
@@ -193,6 +199,10 @@ class PageController extends Controller
 
             $fileData = [];
             foreach ($fileInputs as $key => $file) {
+                // Skip empty file inputs
+                if (!$file || $file->getSize() === 0) {
+                    continue;
+                }
 
                 $data = [];
 

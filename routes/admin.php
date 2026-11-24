@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\ServiceSectionController;
 use App\Http\Controllers\Admin\ServiceSubServiceController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\ProjectCategoryController;
+use App\Http\Controllers\Admin\InsightCategoryController;
 
 Route::group(['prefix' => 'admin'], function () {
 
@@ -67,6 +69,24 @@ Route::group(['prefix' => 'admin'], function () {
                 Route::delete('/projects/{project}/delete', [ProjectController::class , 'destroy'])->name('admin.projects.destroy');
                 Route::delete('/projects/image/{image}/delete', [ProjectController::class , 'deleteImage'])->name('cms.projects.image.delete');
 
+                Route::resource('project-categories', ProjectCategoryController::class)->names([
+                    'index' => 'admin.project-categories.index',
+                    'create' => 'admin.project-categories.create',
+                    'store' => 'admin.project-categories.store',
+                    'edit' => 'admin.project-categories.edit',
+                    'update' => 'admin.project-categories.update',
+                    'destroy' => 'admin.project-categories.destroy'
+                ]);
+
+                Route::resource('/insights-categories', InsightCategoryController::class)->names([
+                    'index' => 'admin.insight-categories.index',
+                    'create' => 'admin.insight-categories.create',
+                    'store' => 'admin.insight-categories.store',
+                    'edit' => 'admin.insight-categories.edit',
+                    'update' => 'admin.insight-categories.update',
+                    'destroy' => 'admin.insight-categories.destroy'
+                ]);
+
 
                 Route::get('/insights', [InsightController::class , 'index'])->name('admin.insights.index');
                 Route::get('/insights/create', [InsightController::class , 'create'])->name('admin.insights.create');
@@ -75,6 +95,15 @@ Route::group(['prefix' => 'admin'], function () {
                 Route::put('/insights/{insight}/update', [InsightController::class , 'update'])->name('admin.insights.update');
                 Route::delete('/insights/{insight}/delete', [InsightController::class , 'destroy'])->name('admin.insights.destroy');
                 Route::delete('/insights/image/{image}/delete', [InsightController::class , 'deleteImage'])->name('admin.insights.image.delete');
+
+                Route::resource('insight-categories', App\Http\Controllers\Admin\InsightCategoryController::class)->names([
+                    'index' => 'admin.insight-categories.index',
+                    'create' => 'admin.insight-categories.create',
+                    'store' => 'admin.insight-categories.store',
+                    'edit' => 'admin.insight-categories.edit',
+                    'update' => 'admin.insight-categories.update',
+                    'destroy' => 'admin.insight-categories.destroy'
+                ]);
 
 
                 Route::get('/material-finishes', [MaterialFinishesController::class , 'index'])->name('admin.material_finishes.index');
@@ -103,6 +132,7 @@ Route::group(['prefix' => 'admin'], function () {
                 Route::put('/services/sections/{section}/update', [ServiceSectionController::class , 'update'])->name('admin.services.sections.update');
                 Route::delete('/services/sections/{section}/delete', [ServiceSectionController::class , 'destroy'])->name('admin.services.sections.destroy');
                 Route::post('/services/sections/items/store', [ServiceSectionController::class , 'storeItem'])->name('admin.services.sections.items.store');
+                Route::put('/services/sections/items/{item}/update', [ServiceSectionController::class , 'updateItem'])->name('admin.services.sections.items.update');
                 Route::delete('/services/sections/items/{item}/delete', [ServiceSectionController::class , 'deleteItem'])->name('admin.services.sections.items.destroy');
 
                 // AJAX Sub-services

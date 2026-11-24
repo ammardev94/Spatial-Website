@@ -25,9 +25,16 @@ class GeneralInformationRequest extends FormRequest
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:255',
             'address' => 'nullable|string',
+            'google_map_link' => 'nullable|string|max:500',
             'instagram_link' => 'nullable|string|max:255',
             'facebook_link' => 'nullable|string|max:255',
             'ticktok_link' => 'nullable|string|max:255',
+            'header_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'footer_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'footer_description' => 'nullable|string|max:500',
+            'trademark_line' => 'nullable|string|max:255',
+            'privacy_link' => 'nullable|url|max:500',
+            'cookie_policy_link' => 'nullable|url|max:500',
         ];
     }
 }

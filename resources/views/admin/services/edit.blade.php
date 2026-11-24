@@ -156,10 +156,14 @@
                                             </div>
                                             <div>
                                                 <div class="fw-bold text-dark">{{ $section->title }}</div>
-                                                <span class="badge bg-soft-info text-info uppercase small ls-1">{{
-                                                    $section->type }}</span>
+                                                <span class="badge bg-soft-info text-info uppercase small ls-1">{{ ucwords(str_replace(['-', '_'], ' ', $section->type)) }}</span>
                                             </div>
                                         </div>
+                                        @if($section->image)
+                                        <div class="me-3">
+                                            <img src="{{ asset('storage/'.$section->image->url) }}" class="img-thumbnail rounded" style="max-width: 60px; max-height: 60px;">
+                                        </div>
+                                        @endif
                                         <div class="btn-group">
                                             <a href="javascript:void(0);"
                                                 class="btn btn-muted btn-sm shadow-none manage-items-btn"
@@ -170,7 +174,7 @@
                                             <a href="javascript:void(0);"
                                                 class="btn btn-muted btn-sm shadow-none ms-1 edit-section-btn"
                                                 data-id="{{ $section->id }}" data-title="{{ $section->title }}"
-                                                data-type="{{ $section->type }}">
+                                                data-type="{{ $section->type }}" data-image="{{ $section->image ? asset('storage/'.$section->image->url) : '' }}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <a href="javascript:void(0);"
@@ -261,6 +265,90 @@
         </div>
     </div>
 </div>
+
+<!-- Edit Item Modal -->
+<div class="modal fade" id="editItemModal" tabindex="-1" style="z-index: 1070;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content text-start">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title fw-bold">Edit Section Item</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="editItemForm" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="edit_item_id">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold">Item Title</label>
+                                <input type="text" name="title" id="edit_item_title" class="form-control form-control-sm" placeholder="Optional title">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold">Item Image</label>
+                                <input type="file" name="image" id="edit_item_image" class="form-control form-control-sm">
+                                <div id="edit_item_image_preview" class="mt-2"></div>
+                                <small class="text-muted">Leave empty to keep current image.</small>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold">Description / Text Content</label>
+                                <textarea name="description" id="edit_item_description" class="form-control form-control-sm" rows="3" placeholder="Bullet points or text block"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold">Button Text</label>
+                                <input type="text" name="button_text" id="edit_item_button_text" class="form-control form-control-sm" placeholder="e.g. Learn More">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold">Button Link</label>
+                                <input type="text" name="button_link" id="edit_item_button_link" class="form-control form-control-sm" placeholder="URL or relative path">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-0">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" name="open_in_new_tab" value="1" id="edit_open_new_tab">
+                                    <label class="form-check-label small fw-bold" for="edit_open_new_tab">Open Link in New Tab</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-muted shadow-none" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary shadow-none px-4">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('css')
+<style>
+    #editItemModal {
+        z-index: 1070 !important;
+    }
+    
+    #editItemModal.show ~ .modal-backdrop,
+    #editItemModal + .modal-backdrop {
+        z-index: 1069 !important;
+    }
+
+    .item-description-truncate {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        word-wrap: break-word;
+    }
+</style>
 @endsection
 
 @section('modal')
@@ -283,10 +371,16 @@
                         <label class="form-label">Section Type</label>
                         <select name="type" class="form-select" required>
                             <option value="text">Text Column</option>
-                            <option value="list">Bullet List</option>
+                            <option value="list-left">Bullet List Left Image</option>
+                            <option value="list-right">Bullet List Right Image</option>
                             <option value="grid">Photo Grid</option>
                             <option value="video">Video Embed</option>
                         </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Section Image (Optional)</label>
+                        <input type="file" name="image" class="form-control">
+                        <div id="add_section_image_preview" class="mt-2"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -342,10 +436,17 @@
                         <label class="form-label small fw-bold">Section Type</label>
                         <select name="type" id="edit_section_type" class="form-select" required>
                             <option value="text">Text Column</option>
-                            <option value="list">Bullet List</option>
-                            <option value="grid">Photo Grid</option>
-                            <option value="video">Video Embed</option>
+                            <option value="list-left">Bullet List Left Image</option>
+                            <option value="list-right">Bullet List Right Image</option>
+                            <!-- <option value="grid">Photo Grid</option>
+                            <option value="video">Video Embed</option> -->
                         </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Section Image (Optional)</label>
+                        <div id="edit_section_image_preview" class="mt-2"></div>
+                        <input type="file" name="image" class="form-control mt-2">
+                        <small class="text-muted">Leave empty to keep current image.</small>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -459,6 +560,49 @@
             }
         });
 
+        // Add Section Image Preview
+        $('#addSectionModal input[name="image"]').change(function () {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $(`#add_section_image_preview`).html(`
+                        <p class="mb-1 text-muted small uppercase fw-bold ls-1">New Selection Preview</p>
+                        <img src="${e.target.result}" width="100%" class="img-thumbnail shadow-sm rounded">
+                    `);
+                }
+                reader.readAsDataURL(this.files[0]);
+            } else {
+                $(`#add_section_image_preview`).empty();
+            }
+        });
+
+        // Edit Section Image Preview
+        $('#editSectionModal input[name="image"]').change(function () {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $(`#edit_section_image_preview`).html(`
+                        <p class="mb-1 text-muted small uppercase fw-bold ls-1">New Selection Preview</p>
+                        <img src="${e.target.result}" width="100%" class="img-thumbnail shadow-sm rounded">
+                    `);
+                }
+                reader.readAsDataURL(this.files[0]);
+            } else {
+                // Reset to current or no image
+                let id = $('#edit_section_id').val();
+                let btn = $(`.edit-section-btn[data-id="${id}"]`);
+                let image = btn.data('image');
+                if (image) {
+                    $('#edit_section_image_preview').html(`
+                        <p class="mb-1 text-muted small uppercase fw-bold ls-1">Current Image</p>
+                        <img src="${image}" width="100%" class="img-thumbnail shadow-sm rounded">
+                    `);
+                } else {
+                    $('#edit_section_image_preview').html('<p class="text-muted small">No image</p>');
+                }
+            }
+        });
+
         if ($("#editServiceForm").length) {
             $("#editServiceForm").validate({
                 rules: {
@@ -474,9 +618,17 @@
 
         $('#addSectionForm').submit(function (e) {
             e.preventDefault();
-            $.post("{{ route('admin.services.sections.store') }}", $(this).serialize(), function (res) {
-                if (res.success) {
-                    location.reload();
+            let formData = new FormData(this);
+            $.ajax({
+                url: "{{ route('admin.services.sections.store') }}",
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    if (res.success) {
+                        location.reload();
+                    }
                 }
             });
         });
@@ -485,10 +637,20 @@
             let id = $(this).data('id');
             let title = $(this).data('title');
             let type = $(this).data('type');
+            let image = $(this).data('image');
 
             $('#edit_section_id').val(id);
             $('#edit_section_title').val(title);
             $('#edit_section_type').val(type);
+
+            if (image) {
+                $('#edit_section_image_preview').html(`
+                    <p class="mb-1 text-muted small uppercase fw-bold ls-1">Current Image</p>
+                    <img src="${image}" width="100%" class="img-thumbnail shadow-sm rounded">
+                `);
+            } else {
+                $('#edit_section_image_preview').html('<p class="text-muted small">No image</p>');
+            }
 
             $('#editSectionModal').modal('show');
         });
@@ -496,12 +658,14 @@
         $('#editSectionForm').submit(function (e) {
             e.preventDefault();
             let id = $('#edit_section_id').val();
-            let data = $(this).serialize();
-
+            let formData = new FormData(this);
+            formData.append('_method', 'PUT');
             $.ajax({
                 url: "{{ route('admin.services.sections.update', ':id') }}".replace(':id', id),
-                type: 'PUT',
-                data: data,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
                 success: function (res) {
                     if (res.success) location.reload();
                 }
@@ -548,7 +712,7 @@
                     } else {
                         let html = '<div class="table-responsive"><table class="table table-sm align-middle">';
                         res.items.forEach(item => {
-                            let img = item.image ? `<img src="/storage/${item.image.url}" width="50" class="rounded border">` : '<span class="text-muted small">No Image</span>';
+                            let img = item.image ? `<img src="{{ asset('storage') }}/${item.image.url}" width="50" class="rounded border">` : '<span class="text-muted small">No Image</span>';
                             html += `
                                 <tr id="item-row-${item.id}">
                                     <td>${img}</td>
@@ -557,6 +721,9 @@
                                         <div class="text-muted wrap-text small" style="max-height: 40px; overflow: hidden;">${item.description || ""}</div>
                                     </td>
                                     <td class="text-end">
+                                        <button class="btn btn-muted btn-sm edit-item-btn" data-id="${item.id}" data-title="${item.title || ''}" data-description="${(item.description || '').replace(/"/g, '&quot;')}" data-button-text="${item.button_text || ''}" data-button-link="${item.button_link || ''}" data-open-new-tab="${item.open_in_new_tab}" data-image="${item.image ? '{{ asset("storage") }}/' + item.image.url : ''}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
                                         <button class="btn btn-muted btn-sm text-danger delete-item-btn" data-id="${item.id}">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
@@ -613,6 +780,78 @@
                     });
                 }
             });
+        });
+
+        // Edit Item Modal Handler
+        $(document).on('click', '.edit-item-btn', function () {
+            let id = $(this).data('id');
+            let title = $(this).data('title');
+            let description = $(this).data('description');
+            let buttonText = $(this).data('button-text');
+            let buttonLink = $(this).data('button-link');
+            let openNewTab = $(this).data('open-new-tab');
+            let image = $(this).data('image');
+
+            $('#edit_item_id').val(id);
+            $('#edit_item_title').val(title);
+            $('#edit_item_description').val(description);
+            $('#edit_item_button_text').val(buttonText);
+            $('#edit_item_button_link').val(buttonLink);
+            $('#edit_open_new_tab').prop('checked', openNewTab == 1);
+
+            if (image) {
+                $('#edit_item_image_preview').html(`
+                    <p class="mb-1 text-muted small uppercase fw-bold ls-1">Current Image</p>
+                    <img src="${image}" width="100%" class="img-thumbnail shadow-sm rounded">
+                `);
+            } else {
+                $('#edit_item_image_preview').html('<p class="text-muted small">No image</p>');
+            }
+
+            $('#editItemModal').modal('show');
+        });
+
+        // Edit Item Form Submission
+        $('#editItemForm').submit(function (e) {
+            e.preventDefault();
+            let id = $('#edit_item_id').val();
+            let formData = new FormData(this);
+            formData.append('_method', 'PUT');
+            let btn = $(this).find('button[type="submit"]');
+            btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-1"></span> Saving...');
+
+            $.ajax({
+                url: "{{ route('admin.services.sections.items.update', ':id') }}".replace(':id', id),
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    btn.prop('disabled', false).html('Save Changes');
+                    if (res.success) {
+                        $('#editItemModal').modal('hide');
+                        loadItems($('#modal_section_id').val());
+                    }
+                },
+                error: function() {
+                    btn.prop('disabled', false).html('Save Changes');
+                    alert('Error updating item. Please try again.');
+                }
+            });
+        });
+
+        // Edit Item Image Preview
+        $('#editItemForm input[name="image"]').change(function () {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $(`#edit_item_image_preview`).html(`
+                        <p class="mb-1 text-muted small uppercase fw-bold ls-1">New Selection Preview</p>
+                        <img src="${e.target.result}" width="100%" class="img-thumbnail shadow-sm rounded">
+                    `);
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
         });
 
         // --- Sub-services Logic ---

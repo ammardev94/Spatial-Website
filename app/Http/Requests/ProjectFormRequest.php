@@ -22,15 +22,16 @@ class ProjectFormRequest extends FormRequest
      */
     public function rules(): array
     {
-        dd(request()->all());
         return [
             'title' => 'required|string|max:255',
+            'slug' => ['nullable','string','max:255', Rule::unique('projects','slug')->ignore($this->project?->id ?? null)],
             'description' => 'required|string',
             'location' => 'nullable|string|max:255',
+            'project_category_id' => 'nullable|exists:project_categories,id',
             'overview' => 'nullable|array',
-            'feature_img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-            'main_img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-            'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'feature_img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp',
+            'main_img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp',
+            'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp',
         ];
     }
 }
