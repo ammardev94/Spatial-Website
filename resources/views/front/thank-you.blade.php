@@ -10,7 +10,7 @@
                 <div class="col-lg-8 col-md-12 text-center wow fadeInUpBig" data-wow-delay="150ms">
                     <div class="d-flex flex-column align-items-center gap-35">
                         <h1 class="font-64 text-uppercase fw-normal m-0">Thank You</h1>
-                        <p class="m-0 font-18">{{ session('contact_success') }}</p>
+                        <p class="m-0 font-18">{{ session('form_success') }}</p>
                         <div class="btn-box d-flex gap-15 flex-wrap justify-content-center">
                             <a href="{{ route('home') }}" class="btn btn-primary --outline --dark">
                                 <span>Back to Home</span>

@@ -179,7 +179,7 @@ class SiteController extends Controller
             Log::error('ROI request notification email failed: ' . $e->getMessage());
         }
 
-        return redirect(route('roi-calculator'))->with('success', 'Thank you for submitting your ROI calculation request! We will review your information and get back to you soon.');
+        return redirect()->route('thank-you')->with('form_success', 'Thank you for submitting your ROI calculation request! We will review your information and get back to you soon.');
     }
     public function storeContact(ContactRequest $request): RedirectResponse
     {
@@ -204,12 +204,12 @@ class SiteController extends Controller
             Log::error('Contact form notification email failed: ' . $e->getMessage());
         }
 
-        return redirect()->route('thank-you')->with('contact_success', 'Thank you! Your request has been submitted successfully. Our team will get back to you shortly.');
+        return redirect()->route('thank-you')->with('form_success', 'Thank you! Your request has been submitted successfully. Our team will get back to you shortly.');
     }
     public function thankYou(): View|RedirectResponse
     {
         // Only reachable right after a successful submission
-        if (! session()->has('contact_success')) {
+        if (! session()->has('form_success')) {
             return redirect()->route('contact');
         }
 

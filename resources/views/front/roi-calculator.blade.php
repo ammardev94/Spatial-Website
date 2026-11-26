@@ -51,12 +51,6 @@
                                 </div>
                             @endif
 
-                            @if (session('success'))
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
-
                             <form method="POST" action="{{ route('roi-calculator.store') }}"
                                 class="updated-form d-flex flex-column gap-20 primary-font fc-secondary text-uppercase">
                                 @csrf

@@ -13,7 +13,7 @@ class ThankYouPageTest extends TestCase
 
     public function test_shows_message_after_successful_submission(): void
     {
-        $this->withSession(['contact_success' => 'Thanks, we will be in touch.'])
+        $this->withSession(['form_success' => 'Thanks, we will be in touch.'])
             ->get(route('thank-you'))
             ->assertOk()
             ->assertSee('Thanks, we will be in touch.');
